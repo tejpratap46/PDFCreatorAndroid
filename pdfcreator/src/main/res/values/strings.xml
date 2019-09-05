@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">pdfcreator</string>
+    <string name="text_pdf_preview_not_support">PDF Preview Is not supported on below android Lolipop</string>
+    <string name="text_next">Next</string>
+    <string name="text_generating_pdf">Generating PDF</string>
+    <string name="text_next_page">Next Page</string>
+    <string name="text_previous_page">Previous Page</string>
+</resources>
