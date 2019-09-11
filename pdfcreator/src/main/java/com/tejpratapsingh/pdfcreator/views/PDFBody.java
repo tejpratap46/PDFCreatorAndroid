@@ -13,7 +13,11 @@ public class PDFBody implements Serializable {
     }
 
     public PDFBody addView(PDFView pdfViewToAdd) {
-        childViewList.add(pdfViewToAdd);
+        if (pdfViewToAdd instanceof PDFTableView) {
+            childViewList.addAll(pdfViewToAdd.getChildViewList());
+        } else {
+            childViewList.add(pdfViewToAdd);
+        }
         return this;
     }
 

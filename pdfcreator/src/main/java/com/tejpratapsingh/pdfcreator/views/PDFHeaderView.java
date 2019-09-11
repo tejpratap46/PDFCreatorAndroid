@@ -1,12 +1,14 @@
 package com.tejpratapsingh.pdfcreator.views;
 
 import android.content.Context;
+import android.widget.LinearLayout;
 
+import com.tejpratapsingh.pdfcreator.views.basic.PDFVerticalView;
 import com.tejpratapsingh.pdfcreator.views.basic.PDFView;
 
 import java.io.Serializable;
 
-public class PDFHeaderView extends PDFView implements Serializable {
+public class PDFHeaderView extends PDFVerticalView implements Serializable {
 
     public PDFHeaderView(Context context) {
         super(context);
@@ -19,8 +21,7 @@ public class PDFHeaderView extends PDFView implements Serializable {
     }
 
     @Override
-    public PDFHeaderView setWeight(float weight) {
-        super.setWeight(weight);
-        return this;
+    public LinearLayout getView() {
+        return (LinearLayout) super.getView();
     }
 }
