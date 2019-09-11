@@ -3,7 +3,26 @@ Simple library to generate and view PDF in Android
 
 ![Cover](https://github.com/tejpratap46/PDFCreatorAndroid/raw/master/cover.png)
 
+[![](https://jitpack.io/v/tejpratap46/PDFCreatorAndroid.svg)](https://jitpack.io/#tejpratap46/PDFCreatorAndroid)
+
 A simple library to create and view PDF with zero dependency Or native code.
+
+Add it in your root build.gradle at the end of repositories:
+```gradle
+	allprojects {
+		repositories {
+			...
+			maven { url 'https://jitpack.io' }
+		}
+	}
+```
+Step 2. Add the dependency
+
+```gradle
+	dependencies {
+	        implementation 'com.github.tejpratap46:PDFCreatorAndroid:1.0'
+	}
+```
 
 ### Concept
 * Android has capability to print documents to PDF, this library simplifies those API's to generate PDF easily.
