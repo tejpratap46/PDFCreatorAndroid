@@ -66,10 +66,13 @@ public abstract class PDFCreatorActivity extends AppCompatActivity implements Vi
 
     public void createPDF(String fileName, final PDFUtil.PDFUtilListener pdfUtilListener) {
         ArrayList<View> bodyViewList = new ArrayList<>();
-        View header = getHeaderView().getView();
-        header.setTag(PDFHeaderView.class.getSimpleName());
-        bodyViewList.add(header);
-        addViewToTempLayout(layoutPageParent, header);
+        View header = null;
+        if (getHeaderView() != null) {
+            header = getHeaderView().getView();
+            header.setTag(PDFHeaderView.class.getSimpleName());
+            bodyViewList.add(header);
+            addViewToTempLayout(layoutPageParent, header);
+        }
 
         if (getBodyViews() != null) {
             for (PDFView pdfView : getBodyViews().getChildViewList()) {
