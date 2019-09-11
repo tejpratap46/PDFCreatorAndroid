@@ -198,7 +198,7 @@ public abstract class PDFCreatorActivity extends AppCompatActivity implements Vi
         }
     }
 
-    protected abstract PDFHeaderView getHeaderView();
+    protected abstract PDFView getHeaderView();
 
     protected abstract PDFBody getBodyViews();
 
