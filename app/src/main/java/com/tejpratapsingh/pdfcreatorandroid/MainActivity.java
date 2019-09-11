@@ -2,11 +2,12 @@ package com.tejpratapsingh.pdfcreatorandroid;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Html;
 import android.text.Spannable;
 import android.text.SpannableString;
+import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
 import android.view.Gravity;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -20,7 +21,6 @@ import com.tejpratapsingh.pdfcreator.views.basic.PDFHorizontalView;
 import com.tejpratapsingh.pdfcreator.views.basic.PDFImageView;
 import com.tejpratapsingh.pdfcreator.views.basic.PDFLineSeparatorView;
 import com.tejpratapsingh.pdfcreator.views.basic.PDFTextView;
-import com.tejpratapsingh.pdfcreator.views.basic.PDFView;
 
 import java.io.File;
 
@@ -49,11 +49,13 @@ public class MainActivity extends PDFCreatorActivity {
         PDFHorizontalView horizontalView = new PDFHorizontalView(getApplicationContext());
 
         PDFImageView imageView = new PDFImageView(getApplicationContext());
-        imageView.setLayout(new LinearLayout.LayoutParams(
+        LinearLayout.LayoutParams imageLayoutParam = new LinearLayout.LayoutParams(
                 60,
-                60, 0));
+                60, 0);
         imageView.setImageScale(ImageView.ScaleType.CENTER_INSIDE);
-        imageView.setImageResource(R.drawable.ic_focus);
+        imageView.setImageResource(R.mipmap.ic_launcher);
+        imageLayoutParam.setMargins(0, 0, 10, 0);
+        imageView.setLayout(imageLayoutParam);
 
         horizontalView.addView(imageView);
 
@@ -126,11 +128,20 @@ public class MainActivity extends PDFCreatorActivity {
             tableView.addRow(tableRowView);
         }
         pdfBody.addView(tableView);
+
+        PDFLineSeparatorView lineSeparatorView3 = new PDFLineSeparatorView(getApplicationContext()).setBackgroundColor(Color.WHITE);
+        pdfBody.addView(lineSeparatorView3);
+
+        PDFTextView pdfIconLicenseView = new PDFTextView(getApplicationContext(), PDFTextView.PDF_TEXT_SIZE.H3);
+        Spanned icon8Link = Html.fromHtml("Icon from <a href='https://icons8.com'>https://icons8.com</a>");
+        pdfIconLicenseView.getView().setText(icon8Link);
+        pdfBody.addView(pdfIconLicenseView);
+
         return pdfBody;
     }
 
     @Override
     protected void onNextClicked(File savedPDFFile) {
-
+        // TODO Do what you want to do when Next button is pressed
     }
 }

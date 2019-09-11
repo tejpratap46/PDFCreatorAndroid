@@ -6,7 +6,7 @@
 
     <dimen name="pdf_width">595px</dimen>
     <dimen name="pdf_height">842px</dimen>
-    <dimen name="pdf_margin_horizontal">10px</dimen>
-    <dimen name="pdf_margin_vertical">10px</dimen>
+    <dimen name="pdf_margin_horizontal">20px</dimen>
+    <dimen name="pdf_margin_vertical">30px</dimen>
     <dimen name="text_size_large">20sp</dimen>
 </resources>
