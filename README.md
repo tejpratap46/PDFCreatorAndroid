@@ -158,3 +158,7 @@ PDFLineSeparatorView lineSeparatorBlack = new PDFLineSeparatorView(getApplicatio
 // Get View
 View separatorView = lineSeparatorWhite.getView();
 ```
+
+## Images and PDF
+[Link to example Image](https://raw.githubusercontent.com/tejpratap46/PDFCreatorAndroid/master/example_screenshot.png)
+[Link to Output PDF](https://github.com/tejpratap46/PDFCreatorAndroid/raw/master/test.pdf)
