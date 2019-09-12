@@ -69,8 +69,92 @@ pdfIconLicenseView.getView().setGravity(Gravity.CENTER_VERTICAL);
 
 #### Advanced, Proceed with caution
 This is a unfinished feature, Use only for basic cases [After using this feature you cannot add child view to your custom view].
-Another Thing, if you want to add a custom view to PDF, you just can create your own like this:
+If you want to add a custom view to PDF (such as chart or icon), you just can create your own like this:
 ```java
 PDFVerticalView verticalView = new PDFVerticalView(context);
 verticalView.setView(View view);
+```
+
+### Example:
+An example is created, Look at [MainActivity](https://github.com/tejpratap46/PDFCreatorAndroid/blob/master/app/src/main/java/com/tejpratapsingh/pdfcreatorandroid/MainActivity.java) of app.
+
+#### VIEWS
+* PDFVerticalView
+```java
+PDFVerticalView verticalView = new PDFVerticalView(getApplicationContext());
+PDFTextView pdfTextView1 = new PDFTextView(getApplicationContext(), PDFTextView.PDF_TEXT_SIZE.P)
+				.setText("TextView1");
+verticalView.addView(pdfTextView1)
+PDFTextView pdfTextView2 = new PDFTextView(getApplicationContext(), PDFTextView.PDF_TEXT_SIZE.P)
+				.setText("TextView2");
+verticalView.addView(pdfTextView2)
+// Get View
+LinearLayout layout = verticalView.getView();
+```
+* PDFHorizontalView
+```java
+PDFHorizontalView horizontalView = new PDFHorizontalView(getApplicationContext());
+PDFTextView pdfTextView1 = new PDFTextView(getApplicationContext(), PDFTextView.PDF_TEXT_SIZE.P)
+				.setText("TextView1");
+horizontalView.addView(pdfTextView1)
+PDFTextView pdfTextView2 = new PDFTextView(getApplicationContext(), PDFTextView.PDF_TEXT_SIZE.P)
+				.setText("TextView2");
+horizontalView.addView(pdfTextView2)
+// Get View
+LinearLayout layout = horizontalView.getView();
+```
+* PDFTextView
+```java
+PDFTextView pdfTextView1 = new PDFTextView(getApplicationContext(), PDFTextView.PDF_TEXT_SIZE.P)
+				.setText("TextView1");
+PDFTextView pdfTextView2 = new PDFTextView(getApplicationContext(), PDFTextView.PDF_TEXT_SIZE.P)
+				.setText(new SpanningString("TextView2"));
+// Get View
+TextView textView = pdfTextView2.getView();
+```
+* PDFImageView
+```java
+PDFImageView pdfImageView = new PDFImageView(getApplicationContext(), PDFTextView.PDF_TEXT_SIZE.P)
+				.setImageResource(R.drawable.ic_example);
+// Get View
+ImageView imageView = pdfImageView.getView();
+```
+* PDFTableView
+```java
+String[] textInTable = {"1", "2", "3", "4"};
+
+// Create table column headers
+PDFTableView.PDFTableRowView tableHeader = new PDFTableView.PDFTableRowView(getApplicationContext());
+for (String s : textInTable) {
+    PDFTextView pdfTextView = new PDFTextView(getApplicationContext(), PDFTextView.PDF_TEXT_SIZE.P);
+    pdfTextView.setText("Header Title: " + s);
+    tableHeader.addToRow(pdfTextView);
+}
+// Create first row
+PDFTableView.PDFTableRowView tableRowView1 = new PDFTableView.PDFTableRowView(getApplicationContext());
+for (String s : textInTable) {
+    PDFTextView pdfTextView = new PDFTextView(getApplicationContext(), PDFTextView.PDF_TEXT_SIZE.P);
+    pdfTextView.setText("Row 1 : " + s);
+    tableRowView1.addToRow(pdfTextView);
+}
+
+// PDFTableView takes table header and first row at once because if page ends after adding header then first row will be on next page. To avoid confusion to user, table header and first row is printed together.
+PDFTableView tableView = new PDFTableView(getApplicationContext(), tableHeader, tableRowView1);
+for (int i = 0; i < 10; i++) {
+    // Create 10 rows and add to table.
+    PDFTableView.PDFTableRowView tableRowView = new PDFTableView.PDFTableRowView(getApplicationContext());
+    for (String s : textInTable) {
+	PDFTextView pdfTextView = new PDFTextView(getApplicationContext(), PDFTextView.PDF_TEXT_SIZE.P);
+	pdfTextView.setText("Row " + (i + 1) + ": " + s);
+	tableRowView.addToRow(pdfTextView);
+    }
+    tableView.addRow(tableRowView);
+}
+```
+* PDFLineSeparatorView
+```java
+PDFLineSeparatorView lineSeparatorWhite = new PDFLineSeparatorView(getApplicationContext()).setBackgroundColor(Color.WHITE);
+PDFLineSeparatorView lineSeparatorBlack = new PDFLineSeparatorView(getApplicationContext()).setBackgroundColor(Color.BLACK);
+// Get View
+View separatorView = lineSeparatorWhite.getView();
 ```
