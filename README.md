@@ -24,12 +24,12 @@ Step 2. Add the dependency
 	}
 ```
 
-### Concept
+## Concept
 * Android has capability to print documents to PDF, this library simplifies those API's to generate PDF easily.
 * At basic level, API renders Views to PDF. To create A PDF with pages we need to submit views exactly height of one page, any view larges then that that will be trimmed.
 * This library creates pages by adding views to a parent view unitil the next view is about to exceed current page. If next view exceeds current page, that view will be added to new page.
 
-### Implementation
+## Implementation
 * First thing first, Look at [MainActivity](https://github.com/tejpratap46/PDFCreatorAndroid/blob/master/app/src/main/java/com/tejpratapsingh/pdfcreatorandroid/MainActivity.java) of app.
 
 1. PDF creater uses views which can be rendered, So we need to exted an activity in order to create activity.
@@ -44,7 +44,7 @@ Step 2. Add the dependency
 4. In `onCreate` of you activity, you have to call `createPDF(String fileName, PDFUtilListener listener)`. It will generate PDF and give you a PDF file in callback (if success). After receiving callback you can close activity and do whatever you need to do with PDF.
 5. This library also provides `PDFUtil.pdfToBitmap(File pdfFile)` method to get image preview of all pages of sepcified PDF file.
 
-#### Available Views
+### Available Views
 
 1. `TextView` -> `PDFTextView`
 2. `VerticalView` -> `PDFVerticalView`
@@ -53,7 +53,7 @@ Step 2. Add the dependency
 5. `TableView` -> `PDFTableView`
 6. `Saperator` -> `PDFLineSaperatorView`
 
-#### Advanced
+### Advanced
 If you cannot find some methods of a `View` Class inside `PDFView` class you can get view by calling `pdfView.getView()` on any available PDFView class and then update view properties.
 
 For example Android `TextView` support setting html to TextView which is not available in `PDFTextView`, to do that see example below:
@@ -67,7 +67,7 @@ Another example, Set gravity to View
 pdfIconLicenseView.getView().setGravity(Gravity.CENTER_VERTICAL);
 ```
 
-#### Advanced, Proceed with caution
+### Advanced, Proceed with caution :warning:
 This is a unfinished feature, Use only for basic cases [After using this feature you cannot add child view to your custom view].
 If you want to add a custom view to PDF (such as chart or icon), you just can create your own like this:
 ```java
@@ -75,10 +75,10 @@ PDFVerticalView verticalView = new PDFVerticalView(context);
 verticalView.setView(View view);
 ```
 
-### Example:
+## Example:
 An example is created, Look at [MainActivity](https://github.com/tejpratap46/PDFCreatorAndroid/blob/master/app/src/main/java/com/tejpratapsingh/pdfcreatorandroid/MainActivity.java) of app.
 
-#### VIEWS
+### VIEWS
 * PDFVerticalView
 ```java
 PDFVerticalView verticalView = new PDFVerticalView(getApplicationContext());
