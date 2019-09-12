@@ -163,3 +163,6 @@ View separatorView = lineSeparatorWhite.getView();
 * [Link to example Image](https://raw.githubusercontent.com/tejpratap46/PDFCreatorAndroid/master/example_screenshot.png)
 
 * [Link to Output PDF](https://github.com/tejpratap46/PDFCreatorAndroid/raw/master/test.pdf)
+
+## Donate
+[![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/M4M413CJC)
