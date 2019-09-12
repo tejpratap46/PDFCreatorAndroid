@@ -1,6 +1,8 @@
 package com.tejpratapsingh.pdfcreatorandroid;
 
+import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.Spannable;
@@ -11,6 +13,8 @@ import android.view.Gravity;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import androidx.core.content.FileProvider;
 
 import com.tejpratapsingh.pdfcreator.activity.PDFCreatorActivity;
 import com.tejpratapsingh.pdfcreator.utils.PDFUtil;
@@ -23,6 +27,7 @@ import com.tejpratapsingh.pdfcreator.views.basic.PDFLineSeparatorView;
 import com.tejpratapsingh.pdfcreator.views.basic.PDFTextView;
 
 import java.io.File;
+import java.net.URLConnection;
 
 public class MainActivity extends PDFCreatorActivity {
 
@@ -142,6 +147,18 @@ public class MainActivity extends PDFCreatorActivity {
 
     @Override
     protected void onNextClicked(File savedPDFFile) {
-        // TODO Do what you want to do when Next button is pressed
+        Intent intentShareFile = new Intent(Intent.ACTION_SEND);
+
+        Uri apkURI = FileProvider.getUriForFile(
+                getApplicationContext(),
+                getApplicationContext()
+                        .getPackageName() + ".provider", savedPDFFile);
+        intentShareFile.setDataAndType(apkURI, URLConnection.guessContentTypeFromName(savedPDFFile.getName()));
+        intentShareFile.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+        intentShareFile.putExtra(Intent.EXTRA_STREAM,
+                Uri.parse("file://" + savedPDFFile.getAbsolutePath()));
+
+        startActivity(Intent.createChooser(intentShareFile, "Share File"));
     }
 }
