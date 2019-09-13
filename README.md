@@ -24,6 +24,9 @@ Step 2. Add the dependency
 	}
 ```
 
+## Try It
+[![Download From Play Store](https://play.google.com/intl/en_us/badges/images/badge_new.png)](https://play.google.com/store/apps/details?id=com.tejpratapsingh.pdfcreatorandroid)
+
 ## Concept
 * Android has capability to print documents to PDF, this library simplifies those API's to generate PDF easily.
 * At basic level, API renders Views to PDF. To create A PDF with pages we need to submit views exactly height of one page, any view larges then that that will be trimmed.
