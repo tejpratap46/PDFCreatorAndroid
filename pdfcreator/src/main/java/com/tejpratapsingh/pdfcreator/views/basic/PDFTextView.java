@@ -58,7 +58,7 @@ public class PDFTextView extends PDFView implements Serializable {
     }
 
     @Override
-    public PDFView addView(PDFView viewToAdd) throws IllegalStateException {
+    protected PDFView addView(PDFView viewToAdd) throws IllegalStateException {
         throw new IllegalStateException("Cannot add subview to TextView");
     }
 

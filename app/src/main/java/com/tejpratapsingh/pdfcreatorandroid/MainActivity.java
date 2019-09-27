@@ -28,6 +28,7 @@ import com.tejpratapsingh.pdfcreator.views.basic.PDFTextView;
 
 import java.io.File;
 import java.net.URLConnection;
+import java.util.Locale;
 
 public class MainActivity extends PDFCreatorActivity {
 
@@ -49,7 +50,7 @@ public class MainActivity extends PDFCreatorActivity {
     }
 
     @Override
-    protected PDFHeaderView getHeaderView() {
+    protected PDFHeaderView getHeaderView(int pageIndex) {
         PDFHeaderView headerView = new PDFHeaderView(getApplicationContext());
         PDFHorizontalView horizontalView = new PDFHorizontalView(getApplicationContext());
 
@@ -69,11 +70,20 @@ public class MainActivity extends PDFCreatorActivity {
         word.setSpan(new ForegroundColorSpan(Color.BLUE), 0, word.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         pdfTextView.setText(word);
         pdfTextView.setLayout(new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.MATCH_PARENT, 0));
+                0,
+                LinearLayout.LayoutParams.MATCH_PARENT, 1));
         pdfTextView.getView().setGravity(Gravity.CENTER_VERTICAL);
 
         horizontalView.addView(pdfTextView);
+
+        PDFTextView pdfTextViewPage = new PDFTextView(getApplicationContext(), PDFTextView.PDF_TEXT_SIZE.SMALL);
+        pdfTextViewPage.setText(String.format(Locale.getDefault(), "Page: %d", pageIndex + 1));
+        pdfTextViewPage.setLayout(new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.MATCH_PARENT, 0));
+        pdfTextViewPage.getView().setGravity(Gravity.BOTTOM);
+
+        horizontalView.addView(pdfTextViewPage);
 
         headerView.addView(horizontalView);
 
@@ -122,12 +132,12 @@ public class MainActivity extends PDFCreatorActivity {
         }
 
         PDFTableView tableView = new PDFTableView(getApplicationContext(), tableHeader, tableRowView1);
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 40; i++) {
             // Create 10 rows
             PDFTableView.PDFTableRowView tableRowView = new PDFTableView.PDFTableRowView(getApplicationContext());
             for (String s : textInTable) {
                 PDFTextView pdfTextView = new PDFTextView(getApplicationContext(), PDFTextView.PDF_TEXT_SIZE.P);
-                pdfTextView.setText("Row " + (i + 1) + ": " + s);
+                pdfTextView.setText("Row " + (i + 2) + ": " + s);
                 tableRowView.addToRow(pdfTextView);
             }
             tableView.addRow(tableRowView);

@@ -56,7 +56,7 @@ public class PDFView implements Serializable {
         return this.currentView.getPaddingTop();
     }
 
-    public PDFView addView(PDFView viewToAdd) throws IllegalStateException {
+    protected PDFView addView(PDFView viewToAdd) throws IllegalStateException {
         if (viewToAdd.hasParent) {
             throw new IllegalStateException("View already has parent");
         }

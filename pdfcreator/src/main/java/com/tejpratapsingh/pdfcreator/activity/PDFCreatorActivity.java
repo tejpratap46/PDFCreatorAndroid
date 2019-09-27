@@ -67,8 +67,8 @@ public abstract class PDFCreatorActivity extends AppCompatActivity implements Vi
     public void createPDF(String fileName, final PDFUtil.PDFUtilListener pdfUtilListener) {
         ArrayList<View> bodyViewList = new ArrayList<>();
         View header = null;
-        if (getHeaderView() != null) {
-            header = getHeaderView().getView();
+        if (getHeaderView(0) != null) {
+            header = getHeaderView(0).getView();
             header.setTag(PDFHeaderView.class.getSimpleName());
             bodyViewList.add(header);
             addViewToTempLayout(layoutPageParent, header);
@@ -144,6 +144,7 @@ public abstract class PDFCreatorActivity extends AppCompatActivity implements Vi
                             headerLayoutHeight = header.getHeight();
                         }
 
+                        int pageIndex = 1;
                         for (View viewItem : tempViewList) {
                             if (currentPageHeight + viewItem.getHeight() > (getResources().getDimensionPixelSize(R.dimen.pdf_height)
                                     - (getResources().getDimensionPixelSize(R.dimen.pdf_margin_vertical) * 2))) {
@@ -155,11 +156,13 @@ public abstract class PDFCreatorActivity extends AppCompatActivity implements Vi
                                 // Add page header again
                                 if (headerLayoutHeight > 0) {
                                     // If height is available, only then add header
-                                    LinearLayout layoutHeader = (LinearLayout) getHeaderView().getView();
+                                    LinearLayout layoutHeader = (LinearLayout) getHeaderView(pageIndex).getView();
                                     addViewToTempLayout(layoutPageParent, layoutHeader);
                                     currentPageHeight += headerLayoutHeight;
                                     layoutPageParent.removeView(layoutHeader);
                                     currentPDFLayout.addView(layoutHeader);
+
+                                    pageIndex = pageIndex + 1;
                                 }
                             }
 
@@ -201,7 +204,7 @@ public abstract class PDFCreatorActivity extends AppCompatActivity implements Vi
         }
     }
 
-    protected abstract PDFHeaderView getHeaderView();
+    protected abstract PDFHeaderView getHeaderView(int page);
 
     protected abstract PDFBody getBodyViews();
 

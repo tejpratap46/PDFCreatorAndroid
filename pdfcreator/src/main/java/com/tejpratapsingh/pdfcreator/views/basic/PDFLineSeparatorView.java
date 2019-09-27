@@ -17,7 +17,7 @@ public class PDFLineSeparatorView extends PDFView {
     }
 
     @Override
-    public PDFLineSeparatorView addView(PDFView viewToAdd) throws IllegalStateException {
+    protected PDFLineSeparatorView addView(PDFView viewToAdd) throws IllegalStateException {
         throw new IllegalStateException("Cannot add subview to Line Separator");
     }
 
