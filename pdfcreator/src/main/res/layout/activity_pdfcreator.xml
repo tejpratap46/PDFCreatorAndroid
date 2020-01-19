@@ -104,7 +104,7 @@
 
         <Button
             android:id="@+id/buttonSendEmail"
-            style="@style/Widget.AppCompat.Button.Colored"
+            style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/text_next" />

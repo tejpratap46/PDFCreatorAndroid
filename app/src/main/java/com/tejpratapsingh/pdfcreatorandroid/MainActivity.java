@@ -2,6 +2,7 @@ package com.tejpratapsingh.pdfcreatorandroid;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
@@ -52,7 +53,29 @@ public class MainActivity extends PDFCreatorActivity {
     @Override
     protected PDFHeaderView getHeaderView(int pageIndex) {
         PDFHeaderView headerView = new PDFHeaderView(getApplicationContext());
+
+        PDFTextView pdfTextViewPage = new PDFTextView(getApplicationContext(), PDFTextView.PDF_TEXT_SIZE.SMALL);
+        pdfTextViewPage.setText(String.format(Locale.getDefault(), "Page: %d", pageIndex + 1));
+        pdfTextViewPage.setLayout(new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT, 0));
+        pdfTextViewPage.getView().setGravity(Gravity.CENTER_HORIZONTAL);
+
+        headerView.addView(pdfTextViewPage);
+
         PDFHorizontalView horizontalView = new PDFHorizontalView(getApplicationContext());
+
+        PDFTextView pdfTextView = new PDFTextView(getApplicationContext(), PDFTextView.PDF_TEXT_SIZE.HEADER);
+        SpannableString word = new SpannableString("INVOICE");
+        word.setSpan(new ForegroundColorSpan(Color.DKGRAY), 0, word.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        pdfTextView.setText(word);
+        pdfTextView.setLayout(new LinearLayout.LayoutParams(
+                0,
+                LinearLayout.LayoutParams.MATCH_PARENT, 1));
+        pdfTextView.getView().setGravity(Gravity.CENTER_VERTICAL);
+        pdfTextView.getView().setTypeface(pdfTextView.getView().getTypeface(), Typeface.BOLD);
+
+        horizontalView.addView(pdfTextView);
 
         PDFImageView imageView = new PDFImageView(getApplicationContext());
         LinearLayout.LayoutParams imageLayoutParam = new LinearLayout.LayoutParams(
@@ -65,34 +88,10 @@ public class MainActivity extends PDFCreatorActivity {
 
         horizontalView.addView(imageView);
 
-        PDFTextView pdfTextView = new PDFTextView(getApplicationContext(), PDFTextView.PDF_TEXT_SIZE.H1);
-        SpannableString word = new SpannableString("Header");
-        word.setSpan(new ForegroundColorSpan(Color.BLUE), 0, word.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        pdfTextView.setText(word);
-        pdfTextView.setLayout(new LinearLayout.LayoutParams(
-                0,
-                LinearLayout.LayoutParams.MATCH_PARENT, 1));
-        pdfTextView.getView().setGravity(Gravity.CENTER_VERTICAL);
-
-        horizontalView.addView(pdfTextView);
-
-        PDFTextView pdfTextViewPage = new PDFTextView(getApplicationContext(), PDFTextView.PDF_TEXT_SIZE.SMALL);
-        pdfTextViewPage.setText(String.format(Locale.getDefault(), "Page: %d", pageIndex + 1));
-        pdfTextViewPage.setLayout(new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                LinearLayout.LayoutParams.MATCH_PARENT, 0));
-        pdfTextViewPage.getView().setGravity(Gravity.BOTTOM);
-
-        horizontalView.addView(pdfTextViewPage);
-
         headerView.addView(horizontalView);
 
         PDFLineSeparatorView lineSeparatorView1 = new PDFLineSeparatorView(getApplicationContext()).setBackgroundColor(Color.WHITE);
         headerView.addView(lineSeparatorView1);
-        PDFLineSeparatorView lineSeparatorView2 = new PDFLineSeparatorView(getApplicationContext()).setBackgroundColor(Color.BLACK);
-        headerView.addView(lineSeparatorView2);
-        PDFLineSeparatorView lineSeparatorView3 = new PDFLineSeparatorView(getApplicationContext()).setBackgroundColor(Color.WHITE);
-        headerView.addView(lineSeparatorView3);
 
         return headerView;
     }
@@ -101,14 +100,14 @@ public class MainActivity extends PDFCreatorActivity {
     protected PDFBody getBodyViews() {
         PDFBody pdfBody = new PDFBody();
 
-        PDFTextView pdfParagraphTitleView = new PDFTextView(getApplicationContext(), PDFTextView.PDF_TEXT_SIZE.H3);
-        pdfParagraphTitleView.setText("Paragraph Example");
-        pdfBody.addView(pdfParagraphTitleView);
+        PDFTextView pdfCompanyNameView = new PDFTextView(getApplicationContext(), PDFTextView.PDF_TEXT_SIZE.H3);
+        pdfCompanyNameView.setText("Company Name");
+        pdfBody.addView(pdfCompanyNameView);
         PDFLineSeparatorView lineSeparatorView1 = new PDFLineSeparatorView(getApplicationContext()).setBackgroundColor(Color.WHITE);
         pdfBody.addView(lineSeparatorView1);
-        PDFTextView pdfParagraphView = new PDFTextView(getApplicationContext(), PDFTextView.PDF_TEXT_SIZE.P);
-        pdfParagraphView.setText(getString(R.string.text_paragraph_example));
-        pdfBody.addView(pdfParagraphView);
+        PDFTextView pdfAddressView = new PDFTextView(getApplicationContext(), PDFTextView.PDF_TEXT_SIZE.P);
+        pdfAddressView.setText("Address Line 1\nCity, State - 123456");
+        pdfBody.addView(pdfAddressView);
 
         String[] textInTable = {"1", "2", "3", "4"};
 

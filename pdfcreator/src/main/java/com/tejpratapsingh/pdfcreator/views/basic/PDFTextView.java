@@ -13,18 +13,20 @@ import java.io.Serializable;
 
 public class PDFTextView extends PDFView implements Serializable {
 
-    private static final float TEXT_SIZE_SMALL = 10;
-    private static final float TEXT_SIZE_P = 12;
+    private static final float TEXT_SIZE_HEADER = 32;
     private static final float TEXT_SIZE_H1 = 24;
     private static final float TEXT_SIZE_H2 = 20;
     private static final float TEXT_SIZE_H3 = 16;
+    private static final float TEXT_SIZE_P = 12;
+    private static final float TEXT_SIZE_SMALL = 10;
 
     public enum PDF_TEXT_SIZE {
-        SMALL(TEXT_SIZE_SMALL),
-        P(TEXT_SIZE_P),
+        HEADER(TEXT_SIZE_HEADER),
         H1(TEXT_SIZE_H1),
         H2(TEXT_SIZE_H2),
-        H3(TEXT_SIZE_H3);
+        H3(TEXT_SIZE_H3),
+        P(TEXT_SIZE_P),
+        SMALL(TEXT_SIZE_SMALL);
 
         // declaring private variable for getting values
         private float fontSize;
