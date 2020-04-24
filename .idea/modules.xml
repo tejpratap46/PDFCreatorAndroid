@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/PDFCreatorAndroid.iml" filepath="$PROJECT_DIR$/PDFCreatorAndroid.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/pdfcreator/pdfcreator.iml" filepath="$PROJECT_DIR$/pdfcreator/pdfcreator.iml" />
+      <module fileurl="file://$PROJECT_DIR$/PDFCreatorAndroid.iml" filepath="$PROJECT_DIR$/PDFCreatorAndroid.iml" group="PDFCreatorAndroid" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="PDFCreatorAndroid/app" />
+      <module fileurl="file://$PROJECT_DIR$/pdfcreator/pdfcreator.iml" filepath="$PROJECT_DIR$/pdfcreator/pdfcreator.iml" group="PDFCreatorAndroid/pdfcreator" />
     </modules>
   </component>
 </project>

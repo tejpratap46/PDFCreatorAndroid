@@ -333,7 +333,6 @@ public class PDFUtil {
             for (int i = 0; i < pageCount; i++) {
                 PdfRenderer.Page page = renderer.openPage(i);
 
-
                 int width = page.getWidth();
                 int height = page.getHeight();
 
@@ -349,17 +348,13 @@ public class PDFUtil {
 
                 // close the page
                 page.close();
-
             }
-
             // close the renderer
             renderer.close();
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-
         return bitmaps;
-
     }
 
     /**
