@@ -20,7 +20,7 @@ Step 2. Add the dependency
 
 ```gradle
 	dependencies {
-	        implementation 'com.github.tejpratap46:PDFCreatorAndroid:1.0'
+	        implementation 'com.github.tejpratap46:PDFCreatorAndroid:LATEST_RELEASE'
 	}
 ```
 
