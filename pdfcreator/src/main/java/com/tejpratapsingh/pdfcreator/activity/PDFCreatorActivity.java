@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -13,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import com.github.chrisbanes.photoview.PhotoView;
 import com.tejpratapsingh.pdfcreator.R;
 import com.tejpratapsingh.pdfcreator.utils.FileManager;
 import com.tejpratapsingh.pdfcreator.utils.PDFUtil;
@@ -33,7 +33,7 @@ public abstract class PDFCreatorActivity extends AppCompatActivity implements Vi
 
     LinearLayout layoutPageParent, layoutPrintPreview;
     TextView textViewGeneratingPDFHolder, textViewPageNumber, textViewPreviewNotAvailable;
-    ImageView imageViewPDFPreview;
+    PhotoView imageViewPDFPreview;
     Button buttonEmailVisit;
     ImageButton buttonNextPage, buttonPreviousPage;
 
