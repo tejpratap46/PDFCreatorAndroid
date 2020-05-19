@@ -10,7 +10,7 @@ public class PDFLineSeparatorView extends PDFView {
 
         View separatorLine = new View(context);
         LinearLayout.LayoutParams separatorLayoutParam = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 1);
-        separatorLayoutParam.setMargins(0, 5, 0, 5);
+        separatorLine.setPadding(0, 5, 0, 5);
         separatorLine.setLayoutParams(separatorLayoutParam);
 
         super.setView(separatorLine);

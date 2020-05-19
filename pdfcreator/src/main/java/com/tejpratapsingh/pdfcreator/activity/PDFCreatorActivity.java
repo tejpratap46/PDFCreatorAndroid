@@ -11,20 +11,19 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 
 import com.tejpratapsingh.pdfcreator.R;
 import com.tejpratapsingh.pdfcreator.utils.FileManager;
 import com.tejpratapsingh.pdfcreator.utils.PDFUtil;
 import com.tejpratapsingh.pdfcreator.views.PDFBody;
-import com.tejpratapsingh.pdfcreator.views.PDFFooterView;
 import com.tejpratapsingh.pdfcreator.views.PDFHeaderView;
 import com.tejpratapsingh.pdfcreator.views.basic.PDFView;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public abstract class PDFCreatorActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = "PDFCreatorActivity";
@@ -47,20 +46,20 @@ public abstract class PDFCreatorActivity extends AppCompatActivity implements Vi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pdfcreator);
 
-        layoutPageParent = (LinearLayout) findViewById(R.id.layoutPdfPreview);
-        textViewGeneratingPDFHolder = (TextView) findViewById(R.id.textViewPdfGeneratingHolder);
-        layoutPrintPreview = (LinearLayout) findViewById(R.id.layoutPrintPreview);
-        imageViewPDFPreview = (ImageView) layoutPrintPreview.findViewById(R.id.imagePreviewPdfPrescription);
-        textViewPageNumber = (TextView) layoutPrintPreview.findViewById(R.id.textViewPreviewPageNumber);
-        textViewPreviewNotAvailable = (TextView) layoutPrintPreview.findViewById(R.id.textViewPreviewPDFNotSupported);
+        layoutPageParent = findViewById(R.id.layoutPdfPreview);
+        textViewGeneratingPDFHolder = findViewById(R.id.textViewPdfGeneratingHolder);
+        layoutPrintPreview = findViewById(R.id.layoutPrintPreview);
+        imageViewPDFPreview = layoutPrintPreview.findViewById(R.id.imagePreviewPdfPrescription);
+        textViewPageNumber = layoutPrintPreview.findViewById(R.id.textViewPreviewPageNumber);
+        textViewPreviewNotAvailable = layoutPrintPreview.findViewById(R.id.textViewPreviewPDFNotSupported);
 
         layoutPageParent.removeAllViews();
 
-        buttonNextPage = (ImageButton) layoutPrintPreview.findViewById(R.id.buttonNextPage);
+        buttonNextPage = layoutPrintPreview.findViewById(R.id.buttonNextPage);
         buttonNextPage.setOnClickListener(this);
-        buttonPreviousPage = (ImageButton) layoutPrintPreview.findViewById(R.id.buttonPreviousPage);
+        buttonPreviousPage = layoutPrintPreview.findViewById(R.id.buttonPreviousPage);
         buttonPreviousPage.setOnClickListener(this);
-        buttonEmailVisit = (Button) layoutPrintPreview.findViewById(R.id.buttonSendEmail);
+        buttonEmailVisit = layoutPrintPreview.findViewById(R.id.buttonSendEmail);
         buttonEmailVisit.setOnClickListener(this);
     }
 
@@ -93,7 +92,7 @@ public abstract class PDFCreatorActivity extends AppCompatActivity implements Vi
                     layoutPrintPreview.setVisibility(View.VISIBLE);
                     selectedPreviewPage = 0;
                     imageViewPDFPreview.setImageBitmap(pagePreviewBitmapList.get(selectedPreviewPage));
-                    textViewPageNumber.setText(String.format("%d of %d", selectedPreviewPage + 1, pagePreviewBitmapList.size()));
+                    textViewPageNumber.setText(String.format(Locale.getDefault(), "%d of %d", selectedPreviewPage + 1, pagePreviewBitmapList.size()));
                 } catch (Exception e) {
                     e.printStackTrace();
                     imageViewPDFPreview.setVisibility(View.GONE);
@@ -137,11 +136,9 @@ public abstract class PDFCreatorActivity extends AppCompatActivity implements Vi
                         pdfPageViewList.add(currentPDFLayout);
                         int currentPageHeight = 0;
 
-                        View header = headerView;
-
-                        if (header != null) {
+                        if (headerView != null) {
                             // If item is a page header, store its height so we can add it to all pages without waiting to render it every time
-                            headerLayoutHeight = header.getHeight();
+                            headerLayoutHeight = headerView.getHeight();
                         }
 
                         int pageIndex = 1;
@@ -156,7 +153,7 @@ public abstract class PDFCreatorActivity extends AppCompatActivity implements Vi
                                 // Add page header again
                                 if (headerLayoutHeight > 0) {
                                     // If height is available, only then add header
-                                    LinearLayout layoutHeader = (LinearLayout) getHeaderView(pageIndex).getView();
+                                    LinearLayout layoutHeader = getHeaderView(pageIndex).getView();
                                     addViewToTempLayout(layoutPageParent, layoutHeader);
                                     currentPageHeight += headerLayoutHeight;
                                     layoutPageParent.removeView(layoutHeader);
@@ -191,14 +188,14 @@ public abstract class PDFCreatorActivity extends AppCompatActivity implements Vi
             }
             selectedPreviewPage = selectedPreviewPage + 1;
             imageViewPDFPreview.setImageBitmap(pagePreviewBitmapList.get(selectedPreviewPage));
-            textViewPageNumber.setText(String.format("%d of %d", selectedPreviewPage + 1, pagePreviewBitmapList.size()));
+            textViewPageNumber.setText(String.format(Locale.getDefault(), "%d of %d", selectedPreviewPage + 1, pagePreviewBitmapList.size()));
         } else if (v == buttonPreviousPage) {
             if (selectedPreviewPage == 0) {
                 return;
             }
             selectedPreviewPage = selectedPreviewPage - 1;
             imageViewPDFPreview.setImageBitmap(pagePreviewBitmapList.get(selectedPreviewPage));
-            textViewPageNumber.setText(String.format("%d of %d", selectedPreviewPage + 1, pagePreviewBitmapList.size()));
+            textViewPageNumber.setText(String.format(Locale.getDefault(), "%d of %d", selectedPreviewPage + 1, pagePreviewBitmapList.size()));
         } else if (v == buttonEmailVisit) {
             onNextClicked(savedPDFFile);
         }

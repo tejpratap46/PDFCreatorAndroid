@@ -1,6 +1,5 @@
 package com.tejpratapsingh.pdfcreator.utils;
 
-import android.annotation.TargetApi;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.pdf.PdfDocument;
@@ -22,7 +21,6 @@ import java.util.List;
  * A Class used to generate PDF for the given Views.
  */
 
-@TargetApi(Build.VERSION_CODES.KITKAT)
 public class PDFUtil {
 
 
@@ -33,19 +31,11 @@ public class PDFUtil {
     /**
      * Page width for our PDF.
      */
-    public static final double PDF_PAGE_WIDTH = 8.3 * 72;
+    private static final double PDF_PAGE_WIDTH = 8.3 * 72;
     /**
      * Page height for our PDF.
      */
-    public static final double PDF_PAGE_HEIGHT = 11.7 * 72;
-    /**
-     * Page width for our PDF in inch.
-     */
-//    public static final double PDF_PAGE_WIDTH_INCH = 8.3;
-    /**
-     * Page height for our PDF in inch.
-     */
-//    public static final double PDF_PAGE_HEIGHT_INCH = 11.7;
+    private static final double PDF_PAGE_HEIGHT = 11.7 * 72;
     /**
      * Singleton instance for PDFUtil.
      */
@@ -119,7 +109,7 @@ public class PDFUtil {
     /**
      * Async task class used to generate PDF in separate thread.
      */
-    private class GeneratePDFAsync extends AsyncTask<Void, Void, File> {
+    private static class GeneratePDFAsync extends AsyncTask<Void, Void, File> {
 
         // mContentViews.
         private List<View> mContentViews;
@@ -140,7 +130,7 @@ public class PDFUtil {
          * @param filePath     FilePath where the PDF has to be stored.
          * @param listener     PDFUtilListener to send callback for PDF generation.
          */
-        public GeneratePDFAsync(final List<View> contentViews, final String filePath, final PDFUtilListener listener) {
+        GeneratePDFAsync(final List<View> contentViews, final String filePath, final PDFUtilListener listener) {
             this.mContentViews = contentViews;
             this.mFilePath = filePath;
             this.mListener = listener;
@@ -164,7 +154,7 @@ public class PDFUtil {
                 // Save document to file.
                 return savePDFDocumentToStorage(pdfDocument);
             } catch (Exception exception) {
-                Log.e(TAG, exception.getMessage());
+                exception.printStackTrace();
                 return null;
             }
         }
@@ -240,6 +230,9 @@ public class PDFUtil {
 
             //Create parent directories
             File parentFile = pdfFile.getParentFile();
+            if (parentFile == null) {
+                return null;
+            }
             if (!parentFile.exists() && !parentFile.mkdirs()) {
                 throw new IllegalStateException("Couldn't create directory: " + parentFile);
             }
@@ -288,7 +281,7 @@ public class PDFUtil {
          *
          * @param errorMessage Error Message.
          */
-        public APINotSupportedException(final String errorMessage) {
+        APINotSupportedException(final String errorMessage) {
             this.mErrorMessage = errorMessage;
         }
 
@@ -315,12 +308,6 @@ public class PDFUtil {
     public static ArrayList<Bitmap> pdfToBitmap(File pdfFile) throws Exception, IllegalStateException {
         if (pdfFile == null || pdfFile.exists() == false) {
             throw new IllegalStateException("");
-        }
-        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.LOLLIPOP) {
-            throw new Exception("PDF preview image cannot be generated in this device");
-        }
-        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.LOLLIPOP) {
-            return null;
         }
 
         ArrayList<Bitmap> bitmaps = new ArrayList<>();
