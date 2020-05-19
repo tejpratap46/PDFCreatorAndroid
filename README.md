@@ -1,9 +1,11 @@
 # PDFCreatorAndroid
 Simple library to generate and view PDF in Android
 
-![Cover](https://github.com/tejpratap46/PDFCreatorAndroid/raw/master/cover1.png)
-
+***
 [![](https://jitpack.io/v/tejpratap46/PDFCreatorAndroid.svg)](https://jitpack.io/#tejpratap46/PDFCreatorAndroid)
+***
+
+![Cover](https://github.com/tejpratap46/PDFCreatorAndroid/raw/master/cover1.png)
 
 A simple library to create and view PDF with zero dependency Or native code.
 
