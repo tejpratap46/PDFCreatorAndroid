@@ -28,6 +28,7 @@ Step 2. Add the dependency
 
 ## Try It
 [![Download From Play Store](https://play.google.com/intl/en_us/badges/images/badge_new.png)](https://play.google.com/store/apps/details?id=com.tejpratapsingh.pdfcreatorandroid)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Ftejpratap46%2FPDFCreatorAndroid.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Ftejpratap46%2FPDFCreatorAndroid?ref=badge_shield)
 
 ## Concept
 * Android has capability to print documents to PDF, this library simplifies those API's to generate PDF easily.
@@ -171,3 +172,7 @@ View separatorView = lineSeparatorWhite.getView();
 
 ## Donate
 [![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/M4M413CJC)
+
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Ftejpratap46%2FPDFCreatorAndroid.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Ftejpratap46%2FPDFCreatorAndroid?ref=badge_large)
