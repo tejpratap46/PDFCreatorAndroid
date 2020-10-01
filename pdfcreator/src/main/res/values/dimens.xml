@@ -9,4 +9,5 @@
     <dimen name="pdf_margin_horizontal">20px</dimen>
     <dimen name="pdf_margin_vertical">30px</dimen>
     <dimen name="text_size_large">20sp</dimen>
+    <dimen name="margin_normal">8dp</dimen>
 </resources>

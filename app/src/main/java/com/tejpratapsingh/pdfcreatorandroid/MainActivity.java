@@ -1,10 +1,12 @@
 package com.tejpratapsingh.pdfcreatorandroid;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
+import android.print.PDFPrint;
 import android.text.Html;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -15,9 +17,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.FileProvider;
 
 import com.tejpratapsingh.pdfcreator.activity.PDFCreatorActivity;
+import com.tejpratapsingh.pdfcreator.utils.FileManager;
 import com.tejpratapsingh.pdfcreator.utils.PDFUtil;
 import com.tejpratapsingh.pdfcreator.views.PDFBody;
 import com.tejpratapsingh.pdfcreator.views.PDFHeaderView;
@@ -36,6 +40,10 @@ public class MainActivity extends PDFCreatorActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().hide();
+        }
 
         createPDF("test", new PDFUtil.PDFUtilListener() {
             @Override
@@ -155,19 +163,73 @@ public class MainActivity extends PDFCreatorActivity {
     }
 
     @Override
-    protected void onNextClicked(File savedPDFFile) {
-        Intent intentShareFile = new Intent(Intent.ACTION_SEND);
+    protected void onNextClicked(final File savedPDFFile) {
 
-        Uri apkURI = FileProvider.getUriForFile(
-                getApplicationContext(),
-                getApplicationContext()
-                        .getPackageName() + ".provider", savedPDFFile);
-        intentShareFile.setDataAndType(apkURI, URLConnection.guessContentTypeFromName(savedPDFFile.getName()));
-        intentShareFile.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        new AlertDialog.Builder(MainActivity.this, R.style.Theme_AppCompat_Light_Dialog)
+                .setTitle("Choose One")
+                .setSingleChoiceItems(new String[]{"Open Pdf Viewer", "Share Pdf", "html Pdf"}, -1, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int position) {
+                        dialogInterface.dismiss();
 
-        intentShareFile.putExtra(Intent.EXTRA_STREAM,
-                Uri.parse("file://" + savedPDFFile.getAbsolutePath()));
+                        switch (position) {
+                            case 0: {
+                                Uri pdfUri = Uri.fromFile(savedPDFFile);
 
-        startActivity(Intent.createChooser(intentShareFile, "Share File"));
+                                Intent intentPdfViewer = new Intent(MainActivity.this, PdfViewerActivity.class);
+                                intentPdfViewer.putExtra(PdfViewerActivity.PDF_FILE_URI, pdfUri);
+
+                                startActivity(intentPdfViewer);
+                                break;
+                            }
+                            case 1: {
+                                Intent intentShareFile = new Intent(Intent.ACTION_SEND);
+
+                                Uri apkURI = FileProvider.getUriForFile(
+                                        getApplicationContext(),
+                                        getApplicationContext()
+                                                .getPackageName() + ".provider", savedPDFFile);
+                                intentShareFile.setDataAndType(apkURI, URLConnection.guessContentTypeFromName(savedPDFFile.getName()));
+                                intentShareFile.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+                                intentShareFile.putExtra(Intent.EXTRA_STREAM,
+                                        Uri.parse("file://" + savedPDFFile.getAbsolutePath()));
+
+                                startActivity(Intent.createChooser(intentShareFile, "Share File"));
+                                break;
+                            }
+                            case 2: {
+                                File savedPDFFile = FileManager.getInstance().createTempFile(getApplicationContext(), "pdf", false);
+                                PDFUtil.generatePDFFromHTML(getApplicationContext(), savedPDFFile, "<h1>Test Data</h1>", new PDFPrint.OnPDFPrintListener() {
+                                    @Override
+                                    public void onSuccess(File file) {
+                                        Intent intentShareFile = new Intent(Intent.ACTION_SEND);
+
+                                        Uri apkURI = FileProvider.getUriForFile(
+                                                getApplicationContext(),
+                                                getApplicationContext()
+                                                        .getPackageName() + ".provider", file);
+                                        intentShareFile.setDataAndType(apkURI, URLConnection.guessContentTypeFromName(file.getName()));
+                                        intentShareFile.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+                                        intentShareFile.putExtra(Intent.EXTRA_STREAM,
+                                                Uri.parse("file://" + file.getAbsolutePath()));
+
+                                        startActivity(Intent.createChooser(intentShareFile, "Share File"));
+                                    }
+
+                                    @Override
+                                    public void onError(Exception exception) {
+                                        exception.printStackTrace();
+                                    }
+                                });
+                                break;
+                            }
+                        }
+                    }
+                })
+                .setNegativeButton(R.string.text_cancel, null)
+                .create()
+                .show();
     }
 }

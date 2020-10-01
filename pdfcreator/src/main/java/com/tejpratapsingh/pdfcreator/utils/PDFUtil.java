@@ -1,5 +1,6 @@
 package com.tejpratapsingh.pdfcreator.utils;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.pdf.PdfDocument;
@@ -7,14 +8,15 @@ import android.graphics.pdf.PdfRenderer;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.ParcelFileDescriptor;
+import android.print.PDFPrint;
 import android.util.Log;
 import android.view.View;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -86,7 +88,10 @@ public class PDFUtil {
             listener.pdfGenerationFailure(
                     new APINotSupportedException("Generate PDF is not available for your android version."));
         }
+    }
 
+    public static void generatePDFFromHTML(final Context context, final File file, final String htmlString, PDFPrint.OnPDFPrintListener onPDFPrintListener) {
+        PDFPrint.generatePDFFromHTML(context, file, htmlString, onPDFPrintListener);
     }
 
     /**
@@ -305,12 +310,12 @@ public class PDFUtil {
      * @return list of bitmap of every page
      * @throws Exception
      */
-    public static ArrayList<Bitmap> pdfToBitmap(File pdfFile) throws Exception, IllegalStateException {
+    public static LinkedList<Bitmap> pdfToBitmap(File pdfFile) throws Exception, IllegalStateException {
         if (pdfFile == null || pdfFile.exists() == false) {
-            throw new IllegalStateException("");
+            throw new IllegalStateException("PDF File Does Not Exist");
         }
 
-        ArrayList<Bitmap> bitmaps = new ArrayList<>();
+        LinkedList<Bitmap> bitmaps = new LinkedList<>();
 
         try {
             PdfRenderer renderer = new PdfRenderer(ParcelFileDescriptor.open(pdfFile, ParcelFileDescriptor.MODE_READ_ONLY));

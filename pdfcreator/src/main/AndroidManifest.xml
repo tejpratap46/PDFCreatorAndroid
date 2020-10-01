@@ -3,6 +3,7 @@
     package="com.tejpratapsingh.pdfcreator">
 
     <application>
+        <activity android:name=".activity.PDFViewerActivity" />
         <activity android:name=".activity.PDFCreatorActivity" />
     </application>
 

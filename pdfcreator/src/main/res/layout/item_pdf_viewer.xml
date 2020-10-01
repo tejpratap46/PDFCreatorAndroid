@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.github.chrisbanes.photoview.PhotoView
+        android:id="@+id/imageViewItemPdfViewer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/grey_800"
+        android:contentDescription="@string/pdf_page_as_image" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textViewPdfViewerPageNumber"
+        style="@style/TextAppearance.AppCompat.Body2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="0dp"
+        android:background="@color/colorWhite"
+        android:gravity="center"
+        android:padding="@dimen/margin_normal"
+        tools:text="1 of 5" />
+
+</RelativeLayout>

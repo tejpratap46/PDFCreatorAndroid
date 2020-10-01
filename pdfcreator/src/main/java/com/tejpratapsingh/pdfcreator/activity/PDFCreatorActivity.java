@@ -124,8 +124,8 @@ public abstract class PDFCreatorActivity extends AppCompatActivity implements Vi
             public void run() {
 
                 // Clean temp folder
-                final FileManager myOPDFileManager = FileManager.getInstance();
-                myOPDFileManager.cleanTempFolder(getApplicationContext());
+                final FileManager fileManager = FileManager.getInstance();
+                fileManager.cleanTempFolder(getApplicationContext());
 
                 runOnUiThread(new Runnable() {
                     @Override
@@ -169,7 +169,7 @@ public abstract class PDFCreatorActivity extends AppCompatActivity implements Vi
                             currentPDFLayout.addView(viewItem);
                         }
 
-                        PDFUtil.getInstance().generatePDF(pdfPageViewList, myOPDFileManager.createTempFileWithName(getApplicationContext(), filename + ".pdf", false).getAbsolutePath(), pdfUtilListener);
+                        PDFUtil.getInstance().generatePDF(pdfPageViewList, fileManager.createTempFileWithName(getApplicationContext(), filename + ".pdf", false).getAbsolutePath(), pdfUtilListener);
                     }
                 });
             }

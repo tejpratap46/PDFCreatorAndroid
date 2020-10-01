@@ -5,4 +5,5 @@
     <string name="text_generating_pdf">Generating PDF</string>
     <string name="text_next_page">Next Page</string>
     <string name="text_previous_page">Previous Page</string>
+    <string name="pdf_page_as_image">pdf page as image</string>
 </resources>
