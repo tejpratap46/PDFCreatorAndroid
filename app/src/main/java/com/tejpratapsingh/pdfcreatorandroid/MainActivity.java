@@ -167,7 +167,7 @@ public class MainActivity extends PDFCreatorActivity {
 
         new AlertDialog.Builder(MainActivity.this, R.style.Theme_AppCompat_Light_Dialog)
                 .setTitle("Choose One")
-                .setSingleChoiceItems(new String[]{"Open Pdf Viewer", "Share Pdf", "html Pdf"}, -1, new DialogInterface.OnClickListener() {
+                .setSingleChoiceItems(new String[]{"Open Pdf Viewer", "Share Pdf"/*, "html Pdf"*/}, -1, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int position) {
                         dialogInterface.dismiss();
