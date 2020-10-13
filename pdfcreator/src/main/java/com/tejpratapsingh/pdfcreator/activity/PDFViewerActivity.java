@@ -3,6 +3,7 @@ package com.tejpratapsingh.pdfcreator.activity;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +31,8 @@ public class PDFViewerActivity extends AppCompatActivity {
 
     public static final String PDF_FILE_URI = "pdfFileUri";
 
+    private File pdfFile = null;
+
     private static LinkedList<Bitmap> pdfBitmapList = new LinkedList<>();
 
     @Override
@@ -51,7 +54,7 @@ public class PDFViewerActivity extends AppCompatActivity {
             return;
         }
 
-        File pdfFile = new File(pdfFileUri.getPath());
+        pdfFile = new File(pdfFileUri.getPath());
 
         if (!pdfFile.exists()) {
             new IllegalStateException("File Does Not Exist.").printStackTrace();
@@ -66,6 +69,12 @@ public class PDFViewerActivity extends AppCompatActivity {
 
         ViewPagerForPhotoView viewPager = findViewById(R.id.viewPagerPdfViewer);
         viewPager.setAdapter(new PDFViewerPagerAdapter(getSupportFragmentManager(), FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT));
+
+        viewPager.setPageTransformer(true, new ZoomOutPageTransformer());
+    }
+
+    public File getPdfFile() {
+        return this.pdfFile;
     }
 
     private static class PDFViewerPagerAdapter extends FragmentStatePagerAdapter {
@@ -106,13 +115,33 @@ public class PDFViewerActivity extends AppCompatActivity {
             Bitmap currentImage = pdfBitmapList.get(position);
 
             ((PhotoView) rootView.findViewById(R.id.imageViewItemPdfViewer)).setImageBitmap(currentImage);
-            ((AppCompatTextView) rootView.findViewById(R.id.textViewPdfViewerPageNumber)).setText(String.format(Locale.getDefault(), "%d of %d", position + 1, pdfBitmapList.size()));
+            ((AppCompatTextView) rootView.findViewById(R.id.textViewPdfViewerPageNumber)).setText(String.format(Locale.getDefault(), "%d OF %d", position + 1, pdfBitmapList.size()));
 
             return rootView;
         }
 
         @Override
         public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        }
+    }
+
+    private static class ZoomOutPageTransformer implements ViewPager.PageTransformer {
+
+        public void transformPage(View view, float position) {
+
+            View viewToAnimateUTB = view.findViewById(R.id.textViewPdfViewerPageNumber);
+
+            int pageHeight = view.getHeight();
+
+            if (position < -1) { // [-Infinity,-1)
+                // This page is way off-screen to the left.
+                viewToAnimateUTB.setTranslationY(0);
+            } else if (position <= 1) { // [-1,1]
+                viewToAnimateUTB.setTranslationY(Math.abs(pageHeight * -position));
+            } else { // (1,+Infinity]
+                // This page is way off-screen to the right.
+                viewToAnimateUTB.setTranslationY(0);
+            }
         }
     }
 }

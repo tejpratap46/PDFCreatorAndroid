@@ -92,7 +92,7 @@ public abstract class PDFCreatorActivity extends AppCompatActivity implements Vi
                     layoutPrintPreview.setVisibility(View.VISIBLE);
                     selectedPreviewPage = 0;
                     imageViewPDFPreview.setImageBitmap(pagePreviewBitmapList.get(selectedPreviewPage));
-                    textViewPageNumber.setText(String.format(Locale.getDefault(), "%d of %d", selectedPreviewPage + 1, pagePreviewBitmapList.size()));
+                    textViewPageNumber.setText(String.format(Locale.getDefault(), "%d OF %d", selectedPreviewPage + 1, pagePreviewBitmapList.size()));
                 } catch (Exception e) {
                     e.printStackTrace();
                     imageViewPDFPreview.setVisibility(View.GONE);

@@ -13,6 +13,7 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
 import android.view.Gravity;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -33,6 +34,7 @@ import com.tejpratapsingh.pdfcreator.views.basic.PDFTextView;
 
 import java.io.File;
 import java.net.URLConnection;
+import java.util.ArrayList;
 import java.util.Locale;
 
 public class MainActivity extends PDFCreatorActivity {
@@ -165,13 +167,18 @@ public class MainActivity extends PDFCreatorActivity {
     @Override
     protected void onNextClicked(final File savedPDFFile) {
 
+        ArrayList<String> optionList = new ArrayList<>();
+        optionList.add("Open Pdf Viewer");
+        optionList.add("Share Pdf");
+        optionList.add("html Pdf");
+
+        ArrayAdapter<String> optionAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, optionList);
+
         new AlertDialog.Builder(MainActivity.this, R.style.Theme_AppCompat_Light_Dialog)
                 .setTitle("Choose One")
-                .setSingleChoiceItems(new String[]{"Open Pdf Viewer", "Share Pdf"/*, "html Pdf"*/}, -1, new DialogInterface.OnClickListener() {
+                .setAdapter(optionAdapter, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int position) {
-                        dialogInterface.dismiss();
-
                         switch (position) {
                             case 0: {
                                 Uri pdfUri = Uri.fromFile(savedPDFFile);
@@ -200,7 +207,8 @@ public class MainActivity extends PDFCreatorActivity {
                             }
                             case 2: {
                                 File savedPDFFile = FileManager.getInstance().createTempFile(getApplicationContext(), "pdf", false);
-                                PDFUtil.generatePDFFromHTML(getApplicationContext(), savedPDFFile, "<h1>Test Data</h1>", new PDFPrint.OnPDFPrintListener() {
+                                PDFUtil.generatePDFFromHTML(getApplicationContext(), savedPDFFile, "<html><body><h1>Test Content</h1><p>Testing, " +
+                                        "testing, testing...</p></body></html>", new PDFPrint.OnPDFPrintListener() {
                                     @Override
                                     public void onSuccess(File file) {
                                         Intent intentShareFile = new Intent(Intent.ACTION_SEND);
@@ -226,6 +234,8 @@ public class MainActivity extends PDFCreatorActivity {
                                 break;
                             }
                         }
+
+                        dialogInterface.dismiss();
                     }
                 })
                 .setNegativeButton(R.string.text_cancel, null)

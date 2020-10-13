@@ -39,7 +39,7 @@ public class RecyclerPdfViewerAdapter extends RecyclerView.Adapter<RecyclerPdfVi
         Bitmap currentImage = pdfPagesImage.get(position);
 
         holder.imageView.setImageBitmap(currentImage);
-        holder.textViewPageNumber.setText(String.format(Locale.getDefault(), "%d of %d", position + 1, this.pdfPagesImage.size()));
+        holder.textViewPageNumber.setText(String.format(Locale.getDefault(), "%d OF %d", position + 1, this.pdfPagesImage.size()));
     }
 
     @Override

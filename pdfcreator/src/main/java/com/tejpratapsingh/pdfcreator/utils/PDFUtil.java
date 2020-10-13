@@ -1,5 +1,6 @@
 package com.tejpratapsingh.pdfcreator.utils;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -9,6 +10,8 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.ParcelFileDescriptor;
 import android.print.PDFPrint;
+import android.print.PrintAttributes;
+import android.print.PrintJob;
 import android.util.Log;
 import android.view.View;
 
@@ -92,6 +95,10 @@ public class PDFUtil {
 
     public static void generatePDFFromHTML(final Context context, final File file, final String htmlString, PDFPrint.OnPDFPrintListener onPDFPrintListener) {
         PDFPrint.generatePDFFromHTML(context, file, htmlString, onPDFPrintListener);
+    }
+
+    public static PrintJob printPdf(final Activity activity, File pdfFileToPrint, PrintAttributes printAttributes) {
+        return PDFPrint.printPDF(activity, pdfFileToPrint, printAttributes);
     }
 
     /**
