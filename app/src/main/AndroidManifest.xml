@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.tejpratapsingh.pdfcreatorandroid">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
@@ -12,16 +14,23 @@
         <activity
             android:name=".MainActivity"
             android:configChanges="orientation|screenSize"
-            android:theme="@style/AppTheme.TransparentStatusBar">
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
+        <activity
+            android:name=".PdfCreatorActivity"
+            android:configChanges="orientation|screenSize"
+            android:theme="@style/AppTheme.TransparentStatusBar" />
         <activity
             android:name=".PdfViewerActivity"
+            android:configChanges="orientation|screenSize"
+            android:theme="@style/AppTheme.TransparentStatusBar" />
+        <activity
+            android:name=".PdfEditorActivity"
             android:configChanges="orientation|screenSize"
             android:theme="@style/AppTheme.TransparentStatusBar" />
 

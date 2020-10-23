@@ -5,4 +5,11 @@
     <string name="text_print">Print</string>
     <string name="text_share">Share</string>
     <string name="text_generated_file_error">Generated File is null or does not exist!</string>
+    <string name="text_create_test_pdf">Create Test Pdf</string>
+    <string name="text_create_html_pdf">Create Pdf From HTML</string>
+    <string name="text_example">Example</string>
+    <string name="text_edit_html_pdf">Edit HTML Pdf</string>
+    <string name="app_icon_license">App Icon made by Freepik from www.flaticon.com</string>
+    <string name="pdf_icon_license">PDF Icon made by Google from www.flaticon.com</string>
+    <string name="text_create_pdf">Create PDF</string>
 </resources>

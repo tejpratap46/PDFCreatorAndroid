@@ -65,6 +65,41 @@ public class PDFPrint {
         mWebView.loadData(htmlString, "text/HTML", "UTF-8");
     }
 
+    public static void generatePDFFromWebView(final File file, final WebView webView, final OnPDFPrintListener onPDFPrintListener) {
+        PrintAttributes printAttributes = new PrintAttributes.Builder()
+                .setMediaSize(PrintAttributes.MediaSize.ISO_A4)
+                .setResolution(new PrintAttributes.Resolution("RESOLUTION_ID", "RESOLUTION_ID", 600, 600))
+                .setMinMargins(PrintAttributes.Margins.NO_MARGINS)
+                .build();
+
+        final PrintDocumentAdapter documentAdapter = webView.createPrintDocumentAdapter(file.getName());
+        documentAdapter.onLayout(null, printAttributes, null, new PrintDocumentAdapter.LayoutResultCallback() {
+            @Override
+            public void onLayoutFinished(PrintDocumentInfo info, boolean changed) {
+                documentAdapter.onWrite(new PageRange[]{PageRange.ALL_PAGES}, getOutputFile(file), null, new PrintDocumentAdapter.WriteResultCallback() {
+
+                    @Override
+                    public void onWriteCancelled() {
+                        super.onWriteCancelled();
+                        onPDFPrintListener.onError(new Exception("PDF Write cancelled."));
+                    }
+
+                    @Override
+                    public void onWriteFailed(CharSequence error) {
+                        super.onWriteFailed(error);
+                        onPDFPrintListener.onError(new Exception(error.toString()));
+                    }
+
+                    @Override
+                    public void onWriteFinished(PageRange[] pages) {
+                        super.onWriteFinished(pages);
+                        onPDFPrintListener.onSuccess(file);
+                    }
+                });
+            }
+        }, null);
+    }
+
     private static ParcelFileDescriptor getOutputFile(File file) {
         try {
             if (!file.exists()) {

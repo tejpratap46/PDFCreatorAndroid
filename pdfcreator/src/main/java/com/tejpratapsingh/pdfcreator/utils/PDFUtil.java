@@ -14,6 +14,7 @@ import android.print.PrintAttributes;
 import android.print.PrintJob;
 import android.util.Log;
 import android.view.View;
+import android.webkit.WebView;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -95,6 +96,10 @@ public class PDFUtil {
 
     public static void generatePDFFromHTML(final Context context, final File file, final String htmlString, PDFPrint.OnPDFPrintListener onPDFPrintListener) {
         PDFPrint.generatePDFFromHTML(context, file, htmlString, onPDFPrintListener);
+    }
+
+    public static void generatePDFFromWebView(final File file, final WebView webView, PDFPrint.OnPDFPrintListener onPDFPrintListener) {
+        PDFPrint.generatePDFFromWebView(file, webView, onPDFPrintListener);
     }
 
     public static PrintJob printPdf(final Activity activity, File pdfFileToPrint, PrintAttributes printAttributes) {
