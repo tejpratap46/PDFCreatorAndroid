@@ -84,10 +84,13 @@ public class PdfEditorActivity extends AppCompatActivity {
             public void success(String html) {
                 Log.d(TAG, "success: html: " + html);
                 FileManager.getInstance().cleanTempFolder(getApplicationContext());
+                // Create Temp File to save Pdf To
                 final File savedPDFFile = FileManager.getInstance().createTempFile(getApplicationContext(), "pdf", false);
+                // Generate Pdf From Html
                 PDFUtil.generatePDFFromWebView(savedPDFFile, webView, new PDFPrint.OnPDFPrintListener() {
                     @Override
                     public void onSuccess(File file) {
+                        // Open Pdf Viewer
                         Uri pdfUri = Uri.fromFile(savedPDFFile);
 
                         Intent intentPdfViewer = new Intent(PdfEditorActivity.this, PdfViewerActivity.class);
@@ -113,7 +116,7 @@ public class PdfEditorActivity extends AppCompatActivity {
 //                "</body>\n" +
 //                "</html>\n", "text/HTML", "UTF-8");
 
-        webView.loadUrl("https://scyrencop.github.io/invoice-html5/");
+        webView.loadUrl("file:///android_asset/invoice.html");
     }
 
     @Override

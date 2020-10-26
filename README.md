@@ -35,7 +35,7 @@ Step 2. Add the dependency
 * This library creates pages by adding views to a parent view unitil the next view is about to exceed current page. If next view exceeds current page, that view will be added to new page.
 
 ## Implementation
-* First thing first, Look at [MainActivity](https://github.com/tejpratap46/PDFCreatorAndroid/blob/master/app/src/main/java/com/tejpratapsingh/pdfcreatorandroid/MainActivity.java) of app.
+* First thing first, Look at [PdfCreatorActivity](https://github.com/tejpratap46/PDFCreatorAndroid/blob/master/app/src/main/java/com/tejpratapsingh/pdfcreatorandroid/PdfCreatorActivity.java) of app.
 
 1. PDF creater uses views which can be rendered, So we need to exted an activity in order to create activity.
 2. Create a Empty `Activity` without any layout and extend it with `PDFCreatorActivity`. Do not set use `setContentView(int resourceId)` inside your created activity.
@@ -81,7 +81,7 @@ verticalView.setView(View view);
 ```
 
 ## Example:
-An example is created, Look at [MainActivity](https://github.com/tejpratap46/PDFCreatorAndroid/blob/master/app/src/main/java/com/tejpratapsingh/pdfcreatorandroid/MainActivity.java) of app.
+An example is created, Look at [PdfCreatorActivity](https://github.com/tejpratap46/PDFCreatorAndroid/blob/master/app/src/main/java/com/tejpratapsingh/pdfcreatorandroid/PdfCreatorActivity.java) of app.
 
 ### VIEWS
 * PDFVerticalView
@@ -163,10 +163,85 @@ PDFLineSeparatorView lineSeparatorBlack = new PDFLineSeparatorView(getApplicatio
 // Get View
 View separatorView = lineSeparatorWhite.getView();
 ```
+**********
+### Pdf Viewer
+This library now has a built-in Pdf Reader which uses `PDFUtil.pdfToBitmap(savedPDFFile)` internally to show preview of Pdf as Images inside a View Pager, Pdf viewer also has a RecyclerView version as well, but you need to add RecyclerView as Your Dependency.
+To Use ViewPager Based Pdf Viewer, you just have to create a Activity and extend it with `PDFViewerActivity` and call it using an Intent.
 
-## Images and PDF
-* [Link to example Image](https://raw.githubusercontent.com/tejpratap46/PDFCreatorAndroid/master/example_screenshot.png)
+```java
+Uri pdfUri = Uri.fromFile(savedPDFFile);
 
+Intent intentPdfViewer = new Intent(MainActivity.this, PdfViewerActivity.class);
+intentPdfViewer.putExtra(PdfViewerActivity.PDF_FILE_URI, pdfUri);
+
+startActivity(intentPdfViewer);
+```
+You can see Example Code At: [PdfViewerActivity](https://github.com/tejpratap46/PDFCreatorAndroid/blob/master/app/src/main/java/com/tejpratapsingh/pdfcreatorandroid/PdfViewerActivity.java) of app.
+
+### Html To Pdf
+You can create a Pdf from Html using Utility function `PDFUtil.generatePDFFromHTML(getApplicationContext(), pdfFileToSave, "<html string />", callback);`
+```java
+// Create Temp File to save Pdf To
+final File savedPDFFile = FileManager.getInstance().createTempFile(getApplicationContext(), "pdf", false);
+// Generate Pdf From Html
+PDFUtil.generatePDFFromHTML(getApplicationContext(), savedPDFFile, " <!DOCTYPE html>\n" +
+    "<html>\n" +
+    "<body>\n" +
+    "\n" +
+    "<h1>My First Heading</h1>\n" +
+    "<p>My first paragraph.</p>\n" +
+    " <a href='https://www.example.com'>This is a link</a>" +
+    "\n" +
+    "</body>\n" +
+    "</html> ", new PDFPrint.OnPDFPrintListener() {
+        @Override
+        public void onSuccess(File file) {
+            // Open Pdf Viewer
+            Uri pdfUri = Uri.fromFile(savedPDFFile);
+
+            Intent intentPdfViewer = new Intent(MainActivity.this, PdfViewerActivity.class);
+            intentPdfViewer.putExtra(PdfViewerActivity.PDF_FILE_URI, pdfUri);
+
+            startActivity(intentPdfViewer);
+        }
+
+        @Override
+        public void onError(Exception exception) {
+            exception.printStackTrace();
+        }
+});
+```
+
+### WebView To Pdf
+With this feature, you can directly create Pdf from whatever your WebView is showing. You can add `contenteditable="true"` and have user edit data and create pdf from edited Data.
+You can just call Utility function: `PDFUtil.generatePDFFromWebView(savedPDFFile, webView, callback)`
+
+You can see Example Code At: [PdfEditorActivity](https://github.com/tejpratap46/PDFCreatorAndroid/blob/master/app/src/main/java/com/tejpratapsingh/pdfcreatorandroid/PdfEditorActivity.java) of app.
+
+```java
+// Create Temp File to save Pdf To
+final File savedPDFFile = FileManager.getInstance().createTempFile(getApplicationContext(), "pdf", false);
+// Generate Pdf From Html
+PDFUtil.generatePDFFromWebView(savedPDFFile, webView, new PDFPrint.OnPDFPrintListener() {
+    @Override
+    public void onSuccess(File file) {
+        // Open Pdf Viewer
+        Uri pdfUri = Uri.fromFile(savedPDFFile);
+
+        Intent intentPdfViewer = new Intent(PdfEditorActivity.this, PdfViewerActivity.class);
+        intentPdfViewer.putExtra(PdfViewerActivity.PDF_FILE_URI, pdfUri);
+
+        startActivity(intentPdfViewer);
+    }
+
+    @Override
+    public void onError(Exception exception) {
+        exception.printStackTrace();
+    }
+});
+```
+
+## Example PDF
 * [Link to Output PDF](https://github.com/tejpratap46/PDFCreatorAndroid/raw/master/test.pdf)
 
 ## Donate

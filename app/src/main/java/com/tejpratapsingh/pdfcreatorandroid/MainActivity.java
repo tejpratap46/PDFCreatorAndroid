@@ -44,7 +44,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 FileManager.getInstance().cleanTempFolder(getApplicationContext());
+                // Create Temp File to save Pdf To
                 final File savedPDFFile = FileManager.getInstance().createTempFile(getApplicationContext(), "pdf", false);
+                // Generate Pdf From Html
                 PDFUtil.generatePDFFromHTML(getApplicationContext(), savedPDFFile, " <!DOCTYPE html>\n" +
                         "<html>\n" +
                         "<body>\n" +
@@ -57,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
                         "</html> ", new PDFPrint.OnPDFPrintListener() {
                     @Override
                     public void onSuccess(File file) {
+                        // Open Pdf Viewer
                         Uri pdfUri = Uri.fromFile(savedPDFFile);
 
                         Intent intentPdfViewer = new Intent(MainActivity.this, PdfViewerActivity.class);
