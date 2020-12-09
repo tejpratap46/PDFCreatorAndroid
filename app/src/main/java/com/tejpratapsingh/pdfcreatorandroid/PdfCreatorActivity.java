@@ -1,28 +1,21 @@
 package com.tejpratapsingh.pdfcreatorandroid;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
-import android.print.PDFPrint;
 import android.text.Html;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
 import android.view.Gravity;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.core.content.FileProvider;
-
 import com.tejpratapsingh.pdfcreator.activity.PDFCreatorActivity;
-import com.tejpratapsingh.pdfcreator.utils.FileManager;
 import com.tejpratapsingh.pdfcreator.utils.PDFUtil;
 import com.tejpratapsingh.pdfcreator.views.PDFBody;
 import com.tejpratapsingh.pdfcreator.views.PDFHeaderView;
@@ -33,8 +26,6 @@ import com.tejpratapsingh.pdfcreator.views.basic.PDFLineSeparatorView;
 import com.tejpratapsingh.pdfcreator.views.basic.PDFTextView;
 
 import java.io.File;
-import java.net.URLConnection;
-import java.util.ArrayList;
 import java.util.Locale;
 
 public class PdfCreatorActivity extends PDFCreatorActivity {

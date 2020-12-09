@@ -5,17 +5,14 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.print.PDFPrint;
 import android.view.View;
-import android.widget.Button;
 import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.FileProvider;
 
 import com.tejpratapsingh.pdfcreator.utils.FileManager;
 import com.tejpratapsingh.pdfcreator.utils.PDFUtil;
 
 import java.io.File;
-import java.net.URLConnection;
 
 public class MainActivity extends AppCompatActivity {
 

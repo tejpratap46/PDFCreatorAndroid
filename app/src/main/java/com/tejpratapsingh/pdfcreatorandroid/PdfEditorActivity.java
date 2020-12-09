@@ -6,28 +6,22 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.print.PDFPrint;
-import android.print.PrintAttributes;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.FileProvider;
 
 import com.tejpratapsingh.pdfcreator.utils.FileManager;
 import com.tejpratapsingh.pdfcreator.utils.PDFUtil;
 
 import java.io.File;
 import java.io.UnsupportedEncodingException;
-import java.net.URLConnection;
 import java.net.URLDecoder;
-
-import static com.tejpratapsingh.pdfcreatorandroid.R.*;
 
 public class PdfEditorActivity extends AppCompatActivity {
     private static final String TAG = "PdfEditorActivity";
@@ -40,7 +34,7 @@ public class PdfEditorActivity extends AppCompatActivity {
             void success(String html);
         }
 
-        private OnSourceReceived onSourceReceived;
+        private final OnSourceReceived onSourceReceived;
 
         public MyWebViewClient(OnSourceReceived onSourceReceived) {
             this.onSourceReceived = onSourceReceived;
@@ -65,16 +59,16 @@ public class PdfEditorActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(layout.activity_pdf_editor);
+        setContentView(R.layout.activity_pdf_editor);
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setTitle("Pdf Editor");
             getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources()
-                    .getColor(color.colorTransparentBlack)));
+                    .getColor(R.color.colorTransparentBlack)));
         }
 
-        webView = (WebView) findViewById(id.webViewEditor);
+        webView = (WebView) findViewById(R.id.webViewEditor);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setSupportZoom(true);
         webView.getSettings().setBuiltInZoomControls(true);
@@ -129,15 +123,10 @@ public class PdfEditorActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home: {
-                finish();
-                break;
-            }
-            case id.menuPrintPdf: {
-                webView.loadUrl("javascript:this.document.location.href = 'source://' + encodeURI(document.documentElement.outerHTML);");
-                break;
-            }
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+        } else if (item.getItemId() == R.id.menuPrintPdf) {
+            webView.loadUrl("javascript:this.document.location.href = 'source://' + encodeURI(document.documentElement.outerHTML);");
         }
         return super.onOptionsItemSelected(item);
     }
