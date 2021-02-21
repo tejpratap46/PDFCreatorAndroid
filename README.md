@@ -2,7 +2,7 @@
 Simple library to generate and view PDF in Android
 
 ***
-[![](https://jitpack.io/v/tejpratap46/PDFCreatorAndroid.svg)](https://jitpack.io/#tejpratap46/PDFCreatorAndroid)
+[![](https://jitpack.io/v/tejpratap46/PDFCreatorAndroid.svg)](https://jitpack.io/#tejpratap46/PDFCreatorAndroid) [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-PDFCreatorAndroid-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/8182)
 ***
 
 ![Cover](https://github.com/tejpratap46/PDFCreatorAndroid/raw/master/cover1.png)
@@ -41,10 +41,12 @@ Step 2. Add the dependency
 2. Create a Empty `Activity` without any layout and extend it with `PDFCreatorActivity`. Do not set use `setContentView(int resourceId)` inside your created activity.
 3. There are 3 abstract methods you have to override.
     1. `getHeaderView()`
-        * This will be header for PDF and will be added to each page. (Use PDFHeaderView if )
+        * This will be header for PDF and will be added to each page. (Accepts PDFHeaderView)
     2. `getBodyViews()`
         * This will return a PDFBody which consist of list of views which can be broken between pages.
-    3. `onNextClicked()`
+    3. `getFooterView()`
+        * This will be footer for PDF and will be added to each page. (Accepts PDFFooterView)
+    4. `onNextClicked()`
         * This is a handler method to get callback when user taps on Next.
 4. In `onCreate` of you activity, you have to call `createPDF(String fileName, PDFUtilListener listener)`. It will generate PDF and give you a PDF file in callback (if success). After receiving callback you can close activity and do whatever you need to do with PDF.
 5. This library also provides `PDFUtil.pdfToBitmap(File pdfFile)` method to get image preview of all pages of sepcified PDF file.
