@@ -2,6 +2,7 @@ package com.tejpratapsingh.pdfcreator.activity;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -17,6 +18,7 @@ import com.tejpratapsingh.pdfcreator.R;
 import com.tejpratapsingh.pdfcreator.utils.FileManager;
 import com.tejpratapsingh.pdfcreator.utils.PDFUtil;
 import com.tejpratapsingh.pdfcreator.views.PDFBody;
+import com.tejpratapsingh.pdfcreator.views.PDFFooterView;
 import com.tejpratapsingh.pdfcreator.views.PDFHeaderView;
 import com.tejpratapsingh.pdfcreator.views.basic.PDFView;
 
@@ -28,7 +30,8 @@ import java.util.Locale;
 public abstract class PDFCreatorActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = "PDFCreatorActivity";
 
-    private int headerLayoutHeight = 0;
+    private int heightRequiredByHeader = 0;
+    private int heightRequiredByFooter = 0;
     private int selectedPreviewPage = 0;
 
     LinearLayout layoutPageParent, layoutPrintPreview;
@@ -82,7 +85,16 @@ public abstract class PDFCreatorActivity extends AppCompatActivity implements Vi
             }
         }
 
-        createPDFFromViewList(header, bodyViewList, fileName, new PDFUtil.PDFUtilListener() {
+        View footer = null;
+        PDFFooterView pdfFooterView = getFooterView(0);
+        if (pdfFooterView != null && pdfFooterView.getView().getChildCount() > 1) {
+            // pdfFooterView.getView().getChildCount() > 1, because first view is ALWAYS empty space filler.
+            footer = pdfFooterView.getView();
+            footer.setTag(PDFFooterView.class.getSimpleName());
+            addViewToTempLayout(layoutPageParent, footer);
+        }
+
+        createPDFFromViewList(header, footer, bodyViewList, fileName, new PDFUtil.PDFUtilListener() {
             @Override
             public void pdfGenerationSuccess(File savedPDFFile) {
                 try {
@@ -118,7 +130,7 @@ public abstract class PDFCreatorActivity extends AppCompatActivity implements Vi
      *
      * @param tempViewList list of views to create pdf views from, view should be already rendered to screen
      */
-    private void createPDFFromViewList(final View headerView, @NonNull final ArrayList<View> tempViewList, @NonNull final String filename, final PDFUtil.PDFUtilListener pdfUtilListener) {
+    private void createPDFFromViewList(final View headerView, final View footerView, @NonNull final ArrayList<View> tempViewList, @NonNull final String filename, final PDFUtil.PDFUtilListener pdfUtilListener) {
         tempViewList.get(tempViewList.size() - 1).post(new Runnable() {
             @Override
             public void run() {
@@ -127,35 +139,44 @@ public abstract class PDFCreatorActivity extends AppCompatActivity implements Vi
                 final FileManager fileManager = FileManager.getInstance();
                 fileManager.cleanTempFolder(getApplicationContext());
 
+                // get height per page
+                final int HEIGHT_ALLOTTED_PER_PAGE = (getResources().getDimensionPixelSize(R.dimen.pdf_height) - (getResources().getDimensionPixelSize(R.dimen.pdf_margin_vertical) * 2));
+
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         final List<View> pdfPageViewList = new ArrayList<>();
-                        LinearLayout currentPDFLayout = (LinearLayout) getLayoutInflater().inflate(R.layout.item_pdf_page, null);
+                        LinearLayout currentPDFLayout = (LinearLayout) getLayoutInflater().inflate(R.layout.item_pdf_page, layoutPageParent, false);
                         currentPDFLayout.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorWhite));
                         pdfPageViewList.add(currentPDFLayout);
                         int currentPageHeight = 0;
 
                         if (headerView != null) {
                             // If item is a page header, store its height so we can add it to all pages without waiting to render it every time
-                            headerLayoutHeight = headerView.getHeight();
+                            heightRequiredByHeader = headerView.getHeight();
+                        }
+
+                        if (footerView != null) {
+                            // If item is a page header, store its height so we can add it to all pages without waiting to render it every time
+                            heightRequiredByFooter = footerView.getHeight();
                         }
 
                         int pageIndex = 1;
-                        for (View viewItem : tempViewList) {
-                            if (currentPageHeight + viewItem.getHeight() > (getResources().getDimensionPixelSize(R.dimen.pdf_height)
-                                    - (getResources().getDimensionPixelSize(R.dimen.pdf_margin_vertical) * 2))) {
-                                currentPDFLayout = (LinearLayout) getLayoutInflater().inflate(R.layout.item_pdf_page, null);
+                        for (int i = 0; i < tempViewList.size(); i++) {
+                            View viewItem = tempViewList.get(i);
+
+                            if (currentPageHeight + viewItem.getHeight() > HEIGHT_ALLOTTED_PER_PAGE) {
+                                currentPDFLayout = (LinearLayout) getLayoutInflater().inflate(R.layout.item_pdf_page, layoutPageParent, false);
                                 currentPDFLayout.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorWhite));
                                 pdfPageViewList.add(currentPDFLayout);
                                 currentPageHeight = 0;
 
                                 // Add page header again
-                                if (headerLayoutHeight > 0) {
+                                if (heightRequiredByHeader > 0) {
                                     // If height is available, only then add header
                                     LinearLayout layoutHeader = getHeaderView(pageIndex).getView();
                                     addViewToTempLayout(layoutPageParent, layoutHeader);
-                                    currentPageHeight += headerLayoutHeight;
+                                    currentPageHeight += heightRequiredByHeader;
                                     layoutPageParent.removeView(layoutHeader);
                                     currentPDFLayout.addView(layoutHeader);
 
@@ -167,6 +188,40 @@ public abstract class PDFCreatorActivity extends AppCompatActivity implements Vi
 
                             layoutPageParent.removeView(viewItem);
                             currentPDFLayout.addView(viewItem);
+
+                            // See if we have enough space to add Next View with Footer
+                            // We we don't, add Footer View to current page
+                            // Height required to add this view in current page
+                            int heightRequiredToAddNextView = 0;
+                            boolean shouldAddFooterNow = false;
+
+                            if (tempViewList.size() > i + 1) {
+                                // Check if we can add CURRENT_VIEW + NEXT_VIEW + FOOTER in current page
+                                View nextViewItem = tempViewList.get(i + 1);
+                                heightRequiredToAddNextView = nextViewItem.getHeight();
+
+                                if (currentPageHeight + heightRequiredToAddNextView + heightRequiredByFooter > HEIGHT_ALLOTTED_PER_PAGE) {
+                                    shouldAddFooterNow = true;
+                                }
+
+                            } else {
+                                // Add Views are already added, we should add footer next
+                                shouldAddFooterNow = true;
+                            }
+
+                            if (shouldAddFooterNow) {
+                                // Cannot Add Next View with Footer in current Page
+                                // Add Footer View to Current Page
+
+                                if (heightRequiredByFooter > 0) {
+                                    // Footer is NOT prematurely added, so we need to subtract 1 from pageIndex
+                                    LinearLayout layoutFooter = getFooterView(pageIndex - 1).getView();
+                                    addViewToTempLayout(layoutPageParent, layoutFooter);
+                                    currentPageHeight += heightRequiredByFooter;
+                                    layoutPageParent.removeView(layoutFooter);
+                                    currentPDFLayout.addView(layoutFooter);
+                                }
+                            }
                         }
 
                         PDFUtil.getInstance().generatePDF(pdfPageViewList, fileManager.createTempFileWithName(getApplicationContext(), filename + ".pdf", false).getAbsolutePath(), pdfUtilListener);
@@ -201,9 +256,30 @@ public abstract class PDFCreatorActivity extends AppCompatActivity implements Vi
         }
     }
 
+    /**
+     * Get header per page, starts with page: 0
+     * MAKE SURE HEIGHT OF EVERY HEADER IS SAME FOR EVERY PAGE
+     *
+     * @param page page number
+     * @return View for header
+     */
     protected abstract PDFHeaderView getHeaderView(int page);
 
+    /**
+     * Content that has to be paginated
+     *
+     * @return PDFBody, which is a List of Views
+     */
     protected abstract PDFBody getBodyViews();
+
+    /**
+     * Get header per page, starts with page: 0
+     * MAKE SURE HEIGHT OF EVERY FOOTER IS SAME FOR EVERY PAGE
+     *
+     * @param page page number
+     * @return View for header
+     */
+    protected abstract PDFFooterView getFooterView(int page);
 
     protected abstract void onNextClicked(File savedPDFFile);
 }

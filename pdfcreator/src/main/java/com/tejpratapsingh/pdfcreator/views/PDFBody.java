@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class PDFBody implements Serializable {
 
-    private ArrayList<PDFView> childViewList = new ArrayList<>();
+    private final ArrayList<PDFView> childViewList = new ArrayList<>();
 
     public PDFBody() {
     }

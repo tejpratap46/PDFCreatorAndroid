@@ -42,47 +42,40 @@ public class PdfViewerActivity extends PDFViewerActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home: {
-                finish();
-                break;
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+        } else if (item.getItemId() == R.id.menuPrintPdf) {
+            File fileToPrint = getPdfFile();
+            if (fileToPrint == null || !fileToPrint.exists()) {
+                Toast.makeText(this, R.string.text_generated_file_error, Toast.LENGTH_SHORT).show();
+                return super.onOptionsItemSelected(item);
             }
-            case R.id.menuPrintPdf: {
-                File fileToPrint = getPdfFile();
-                if (fileToPrint == null || !fileToPrint.exists()) {
-                    Toast.makeText(this, R.string.text_generated_file_error, Toast.LENGTH_SHORT).show();
-                    break;
-                }
 
-                PrintAttributes.Builder printAttributeBuilder = new PrintAttributes.Builder();
-                printAttributeBuilder.setMediaSize(PrintAttributes.MediaSize.ISO_A4);
-                printAttributeBuilder.setMinMargins(PrintAttributes.Margins.NO_MARGINS);
+            PrintAttributes.Builder printAttributeBuilder = new PrintAttributes.Builder();
+            printAttributeBuilder.setMediaSize(PrintAttributes.MediaSize.ISO_A4);
+            printAttributeBuilder.setMinMargins(PrintAttributes.Margins.NO_MARGINS);
 
-                PDFUtil.printPdf(PdfViewerActivity.this, fileToPrint, printAttributeBuilder.build());
-                break;
+            PDFUtil.printPdf(PdfViewerActivity.this, fileToPrint, printAttributeBuilder.build());
+        } else if (item.getItemId() == R.id.menuSharePdf) {
+            File fileToShare = getPdfFile();
+            if (fileToShare == null || !fileToShare.exists()) {
+                Toast.makeText(this, R.string.text_generated_file_error, Toast.LENGTH_SHORT).show();
+                return super.onOptionsItemSelected(item);
             }
-            case R.id.menuSharePdf: {
-                File fileToShare = getPdfFile();
-                if (fileToShare == null || !fileToShare.exists()) {
-                    Toast.makeText(this, R.string.text_generated_file_error, Toast.LENGTH_SHORT).show();
-                    break;
-                }
 
-                Intent intentShareFile = new Intent(Intent.ACTION_SEND);
+            Intent intentShareFile = new Intent(Intent.ACTION_SEND);
 
-                Uri apkURI = FileProvider.getUriForFile(
-                        getApplicationContext(),
-                        getApplicationContext()
-                                .getPackageName() + ".provider", fileToShare);
-                intentShareFile.setDataAndType(apkURI, URLConnection.guessContentTypeFromName(fileToShare.getName()));
-                intentShareFile.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            Uri apkURI = FileProvider.getUriForFile(
+                    getApplicationContext(),
+                    getApplicationContext()
+                            .getPackageName() + ".provider", fileToShare);
+            intentShareFile.setDataAndType(apkURI, URLConnection.guessContentTypeFromName(fileToShare.getName()));
+            intentShareFile.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
-                intentShareFile.putExtra(Intent.EXTRA_STREAM,
-                        Uri.parse("file://" + fileToShare.getAbsolutePath()));
+            intentShareFile.putExtra(Intent.EXTRA_STREAM,
+                    Uri.parse("file://" + fileToShare.getAbsolutePath()));
 
-                startActivity(Intent.createChooser(intentShareFile, "Share File"));
-                break;
-            }
+            startActivity(Intent.createChooser(intentShareFile, "Share File"));
         }
         return super.onOptionsItemSelected(item);
     }

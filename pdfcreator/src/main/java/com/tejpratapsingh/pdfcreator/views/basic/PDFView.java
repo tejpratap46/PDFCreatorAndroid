@@ -12,16 +12,20 @@ public class PDFView implements Serializable {
 
     public int paddingTop = 0, paddingRight = 0, paddingBottom = 0, paddingLeft = 0;
 
-    private ArrayList<PDFView> childViewList = new ArrayList<>();
+    private final ArrayList<PDFView> childViewList = new ArrayList<>();
 
     private boolean hasParent = false;
 
     private View currentView = null;
 
-    private Context context;
+    private final Context context;
 
     protected PDFView(Context context) {
         this.context = context;
+    }
+
+    public Context getContext() {
+        return context;
     }
 
     public PDFView setView(View view) {

@@ -11,6 +11,7 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
 import android.view.Gravity;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -18,12 +19,14 @@ import android.widget.Toast;
 import com.tejpratapsingh.pdfcreator.activity.PDFCreatorActivity;
 import com.tejpratapsingh.pdfcreator.utils.PDFUtil;
 import com.tejpratapsingh.pdfcreator.views.PDFBody;
+import com.tejpratapsingh.pdfcreator.views.PDFFooterView;
 import com.tejpratapsingh.pdfcreator.views.PDFHeaderView;
 import com.tejpratapsingh.pdfcreator.views.PDFTableView;
 import com.tejpratapsingh.pdfcreator.views.basic.PDFHorizontalView;
 import com.tejpratapsingh.pdfcreator.views.basic.PDFImageView;
 import com.tejpratapsingh.pdfcreator.views.basic.PDFLineSeparatorView;
 import com.tejpratapsingh.pdfcreator.views.basic.PDFTextView;
+import com.tejpratapsingh.pdfcreator.views.basic.PDFView;
 
 import java.io.File;
 import java.util.Locale;
@@ -54,15 +57,6 @@ public class PdfCreatorActivity extends PDFCreatorActivity {
     @Override
     protected PDFHeaderView getHeaderView(int pageIndex) {
         PDFHeaderView headerView = new PDFHeaderView(getApplicationContext());
-
-        PDFTextView pdfTextViewPage = new PDFTextView(getApplicationContext(), PDFTextView.PDF_TEXT_SIZE.SMALL);
-        pdfTextViewPage.setText(String.format(Locale.getDefault(), "Page: %d", pageIndex + 1));
-        pdfTextViewPage.setLayout(new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.MATCH_PARENT, 0));
-        pdfTextViewPage.getView().setGravity(Gravity.CENTER_HORIZONTAL);
-
-        headerView.addView(pdfTextViewPage);
 
         PDFHorizontalView horizontalView = new PDFHorizontalView(getApplicationContext());
 
@@ -110,10 +104,16 @@ public class PdfCreatorActivity extends PDFCreatorActivity {
         pdfAddressView.setText("Address Line 1\nCity, State - 123456");
         pdfBody.addView(pdfAddressView);
 
+        PDFLineSeparatorView lineSeparatorView2 = new PDFLineSeparatorView(getApplicationContext()).setBackgroundColor(Color.WHITE);
+        lineSeparatorView2.setLayout(new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                8, 0));
+        pdfBody.addView(lineSeparatorView2);
+
         String[] textInTable = {"1", "2", "3", "4"};
 
-        PDFLineSeparatorView lineSeparatorView2 = new PDFLineSeparatorView(getApplicationContext()).setBackgroundColor(Color.WHITE);
-        pdfBody.addView(lineSeparatorView2);
+        PDFLineSeparatorView lineSeparatorView3 = new PDFLineSeparatorView(getApplicationContext()).setBackgroundColor(Color.WHITE);
+        pdfBody.addView(lineSeparatorView3);
         PDFTextView pdfTableTitleView = new PDFTextView(getApplicationContext(), PDFTextView.PDF_TEXT_SIZE.P);
         pdfTableTitleView.setText("Table Example");
         pdfBody.addView(pdfTableTitleView);
@@ -144,8 +144,8 @@ public class PdfCreatorActivity extends PDFCreatorActivity {
         }
         pdfBody.addView(tableView);
 
-        PDFLineSeparatorView lineSeparatorView3 = new PDFLineSeparatorView(getApplicationContext()).setBackgroundColor(Color.BLACK);
-        pdfBody.addView(lineSeparatorView3);
+        PDFLineSeparatorView lineSeparatorView4 = new PDFLineSeparatorView(getApplicationContext()).setBackgroundColor(Color.BLACK);
+        pdfBody.addView(lineSeparatorView4);
 
         PDFTextView pdfIconLicenseView = new PDFTextView(getApplicationContext(), PDFTextView.PDF_TEXT_SIZE.H3);
         Spanned icon8Link = Html.fromHtml("Icon from <a href='https://icons8.com'>https://icons8.com</a>");
@@ -153,6 +153,22 @@ public class PdfCreatorActivity extends PDFCreatorActivity {
         pdfBody.addView(pdfIconLicenseView);
 
         return pdfBody;
+    }
+
+    @Override
+    protected PDFFooterView getFooterView(int pageIndex) {
+        PDFFooterView footerView = new PDFFooterView(getApplicationContext());
+
+        PDFTextView pdfTextViewPage = new PDFTextView(getApplicationContext(), PDFTextView.PDF_TEXT_SIZE.SMALL);
+        pdfTextViewPage.setText(String.format(Locale.getDefault(), "Page: %d", pageIndex + 1));
+        pdfTextViewPage.setLayout(new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT, 0));
+        pdfTextViewPage.getView().setGravity(Gravity.CENTER_HORIZONTAL);
+
+        footerView.addView(pdfTextViewPage);
+
+        return footerView;
     }
 
     @Override

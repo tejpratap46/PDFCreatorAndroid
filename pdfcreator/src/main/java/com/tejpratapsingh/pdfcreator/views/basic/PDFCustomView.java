@@ -12,9 +12,16 @@ public class PDFCustomView extends PDFView implements Serializable {
         super(context);
     }
 
-    private PDFCustomView(Context context, View view, int width, int height) {
+    public PDFCustomView(Context context, View view, int width, int height) {
         super(context);
         view.setLayoutParams(new LinearLayout.LayoutParams(width, height, 0));
+
+        super.setView(view);
+    }
+
+    public PDFCustomView(Context context, View view, int width, int height, int weight) {
+        super(context);
+        view.setLayoutParams(new LinearLayout.LayoutParams(width, height, weight));
 
         super.setView(view);
     }
