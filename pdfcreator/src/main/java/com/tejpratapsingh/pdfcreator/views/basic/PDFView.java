@@ -3,6 +3,7 @@ package com.tejpratapsingh.pdfcreator.views.basic;
 import android.content.Context;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -74,6 +75,11 @@ public class PDFView implements Serializable {
     }
 
     public PDFView setLayout(LinearLayout.LayoutParams layoutParams) {
+        this.currentView.setLayoutParams(layoutParams);
+        return this;
+    }
+
+    public PDFView setLayout(RelativeLayout.LayoutParams layoutParams) {
         this.currentView.setLayoutParams(layoutParams);
         return this;
     }

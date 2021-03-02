@@ -3,6 +3,7 @@ package com.tejpratapsingh.pdfcreator.views.basic;
 import android.content.Context;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import java.io.Serializable;
 
@@ -31,6 +32,12 @@ public class PDFVerticalView extends PDFView implements Serializable {
 
     @Override
     public PDFVerticalView setLayout(LinearLayout.LayoutParams layoutParams) {
+        super.setLayout(layoutParams);
+        return this;
+    }
+
+    @Override
+    public PDFVerticalView setLayout(RelativeLayout.LayoutParams layoutParams) {
         super.setLayout(layoutParams);
         return this;
     }

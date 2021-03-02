@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import androidx.annotation.DrawableRes;
 
@@ -60,6 +61,12 @@ public class PDFImageView extends PDFView implements Serializable {
 
     @Override
     public PDFImageView setLayout(LinearLayout.LayoutParams layoutParams) {
+        super.setLayout(layoutParams);
+        return this;
+    }
+
+    @Override
+    public PDFImageView setLayout(RelativeLayout.LayoutParams layoutParams) {
         super.setLayout(layoutParams);
         return this;
     }

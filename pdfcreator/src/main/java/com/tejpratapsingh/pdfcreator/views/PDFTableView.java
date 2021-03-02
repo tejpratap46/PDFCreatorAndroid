@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.tejpratapsingh.pdfcreator.views.basic.PDFHorizontalView;
 import com.tejpratapsingh.pdfcreator.views.basic.PDFLineSeparatorView;
@@ -47,6 +48,12 @@ public class PDFTableView extends PDFView implements Serializable {
 
     @Override
     public PDFTableView setLayout(LinearLayout.LayoutParams layoutParams) {
+        super.setLayout(layoutParams);
+        return this;
+    }
+
+    @Override
+    public PDFTableView setLayout(RelativeLayout.LayoutParams layoutParams) {
         super.setLayout(layoutParams);
         return this;
     }

@@ -3,6 +3,7 @@ package com.tejpratapsingh.pdfcreator.views.basic;
 import android.content.Context;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 public class PDFLineSeparatorView extends PDFView {
     public PDFLineSeparatorView(Context context) {
@@ -23,6 +24,12 @@ public class PDFLineSeparatorView extends PDFView {
 
     @Override
     public PDFLineSeparatorView setLayout(LinearLayout.LayoutParams layoutParams) {
+        super.setLayout(layoutParams);
+        return this;
+    }
+
+    @Override
+    public PDFLineSeparatorView setLayout(RelativeLayout.LayoutParams layoutParams) {
         super.setLayout(layoutParams);
         return this;
     }

@@ -7,6 +7,7 @@ import android.text.SpannableString;
 import android.util.TypedValue;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.io.Serializable;
@@ -82,6 +83,12 @@ public class PDFTextView extends PDFView implements Serializable {
 
     @Override
     public PDFTextView setLayout(LinearLayout.LayoutParams layoutParams) {
+        super.setLayout(layoutParams);
+        return this;
+    }
+
+    @Override
+    public PDFTextView setLayout(RelativeLayout.LayoutParams layoutParams) {
         super.setLayout(layoutParams);
         return this;
     }
