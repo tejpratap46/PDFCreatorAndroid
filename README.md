@@ -47,7 +47,7 @@ Step 2. Add the dependency
     3. `getFooterView()`
         * This will be footer for PDF and will be added to each page. (Accepts PDFFooterView)
     3. `getWatermarkView()`
-        * [OPTIONAL] This add a watermark image to each page. (Accepts PDFImageView), see #14
+        * [OPTIONAL] This add a watermark image to each page. (Accepts PDFImageView), see [issue #14](https://github.com/tejpratap46/PDFCreatorAndroid/issues/14)
     4. `onNextClicked()`
         * This is a handler method to get callback when user taps on Next.
 4. In `onCreate` of you activity, you have to call `createPDF(String fileName, PDFUtilListener listener)`. It will generate PDF and give you a PDF file in callback (if success). After receiving callback you can close activity and do whatever you need to do with PDF.
