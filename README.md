@@ -46,6 +46,8 @@ Step 2. Add the dependency
         * This will return a PDFBody which consist of list of views which can be broken between pages.
     3. `getFooterView()`
         * This will be footer for PDF and will be added to each page. (Accepts PDFFooterView)
+    3. `getWatermarkView()`
+        * [OPTIONAL] This add a watermark image to each page. (Accepts PDFImageView), see #14
     4. `onNextClicked()`
         * This is a handler method to get callback when user taps on Next.
 4. In `onCreate` of you activity, you have to call `createPDF(String fileName, PDFUtilListener listener)`. It will generate PDF and give you a PDF file in callback (if success). After receiving callback you can close activity and do whatever you need to do with PDF.
@@ -165,6 +167,9 @@ PDFLineSeparatorView lineSeparatorBlack = new PDFLineSeparatorView(getApplicatio
 // Get View
 View separatorView = lineSeparatorWhite.getView();
 ```
+
+
+
 **********
 ### Pdf Viewer
 This library now has a built-in Pdf Reader which uses `PDFUtil.pdfToBitmap(savedPDFFile)` internally to show preview of Pdf as Images inside a View Pager, Pdf viewer also has a RecyclerView version as well, but you need to add RecyclerView as Your Dependency.
