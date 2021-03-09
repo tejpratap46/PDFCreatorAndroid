@@ -2,6 +2,7 @@ package com.tejpratapsingh.pdfcreator.views.basic;
 
 import android.content.Context;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import java.io.Serializable;
@@ -14,7 +15,7 @@ public class PDFCustomView extends PDFView implements Serializable {
 
     public PDFCustomView(Context context, View view, int width, int height) {
         super(context);
-        view.setLayoutParams(new LinearLayout.LayoutParams(width, height, 0));
+        view.setLayoutParams(new ViewGroup.LayoutParams(width, height));
 
         super.setView(view);
     }

@@ -30,7 +30,7 @@ public class PDFVerticalView extends PDFView implements Serializable {
     }
 
     @Override
-    public PDFVerticalView setLayout(LinearLayout.LayoutParams layoutParams) {
+    public PDFVerticalView setLayout(ViewGroup.LayoutParams layoutParams) {
         super.setLayout(layoutParams);
         return this;
     }

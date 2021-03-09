@@ -29,7 +29,7 @@ public class PDFHorizontalView extends PDFView implements Serializable {
     }
 
     @Override
-    public PDFHorizontalView setLayout(LinearLayout.LayoutParams layoutParams) {
+    public PDFHorizontalView setLayout(ViewGroup.LayoutParams layoutParams) {
         super.setLayout(layoutParams);
         return this;
     }

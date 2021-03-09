@@ -46,9 +46,8 @@ public class PDFTableView extends PDFView implements Serializable {
     }
 
     @Override
-    public PDFTableView setLayout(LinearLayout.LayoutParams layoutParams) {
-        super.setLayout(layoutParams);
-        return this;
+    public PDFView setLayout(ViewGroup.LayoutParams layoutParams) {
+        return super.setLayout(layoutParams);
     }
 
     public static class PDFTableRowView extends PDFHorizontalView implements Serializable {

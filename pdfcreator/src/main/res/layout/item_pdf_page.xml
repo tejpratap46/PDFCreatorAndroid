@@ -1,18 +1,8 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/layoutPDFParent"
     android:layout_width="@dimen/pdf_width"
     android:layout_height="@dimen/pdf_height"
-    android:orientation="vertical"
-    android:paddingBottom="@dimen/pdf_margin_vertical"
     android:paddingLeft="@dimen/pdf_margin_horizontal"
+    android:paddingTop="@dimen/pdf_margin_vertical"
     android:paddingRight="@dimen/pdf_margin_horizontal"
-    android:paddingTop="@dimen/pdf_margin_vertical">
-
-    <LinearLayout
-        android:id="@+id/layoutPDFChild"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-    </LinearLayout>
-</LinearLayout>
+    android:paddingBottom="@dimen/pdf_margin_vertical" />

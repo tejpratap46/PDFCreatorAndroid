@@ -2,14 +2,16 @@ package com.tejpratapsingh.pdfcreator.activity;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
@@ -20,6 +22,8 @@ import com.tejpratapsingh.pdfcreator.utils.PDFUtil;
 import com.tejpratapsingh.pdfcreator.views.PDFBody;
 import com.tejpratapsingh.pdfcreator.views.PDFFooterView;
 import com.tejpratapsingh.pdfcreator.views.PDFHeaderView;
+import com.tejpratapsingh.pdfcreator.views.basic.PDFImageView;
+import com.tejpratapsingh.pdfcreator.views.basic.PDFVerticalView;
 import com.tejpratapsingh.pdfcreator.views.basic.PDFView;
 
 import java.io.File;
@@ -146,9 +150,23 @@ public abstract class PDFCreatorActivity extends AppCompatActivity implements Vi
                     @Override
                     public void run() {
                         final List<View> pdfPageViewList = new ArrayList<>();
-                        LinearLayout currentPDFLayout = (LinearLayout) getLayoutInflater().inflate(R.layout.item_pdf_page, layoutPageParent, false);
+                        FrameLayout currentPDFLayout = (FrameLayout) getLayoutInflater().inflate(R.layout.item_pdf_page, layoutPageParent, false);
                         currentPDFLayout.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorWhite));
                         pdfPageViewList.add(currentPDFLayout);
+
+                        // Add watermark layout
+                        PDFView watermarkPDFView = getWatermarkView(0);
+                        if (watermarkPDFView != null && watermarkPDFView.getView() != null) {
+                            currentPDFLayout.addView(watermarkPDFView.getView());
+                        }
+
+                        LinearLayout currentPDFView = new PDFVerticalView(getApplicationContext()).getView();
+                        final LinearLayout.LayoutParams verticalPageLayoutParams = new LinearLayout.LayoutParams(
+                                ViewGroup.LayoutParams.MATCH_PARENT,
+                                ViewGroup.LayoutParams.MATCH_PARENT, 0);
+                        currentPDFView.setLayoutParams(verticalPageLayoutParams);
+                        currentPDFLayout.addView(currentPDFView);
+
                         int currentPageHeight = 0;
 
                         if (headerView != null) {
@@ -166,10 +184,20 @@ public abstract class PDFCreatorActivity extends AppCompatActivity implements Vi
                             View viewItem = tempViewList.get(i);
 
                             if (currentPageHeight + viewItem.getHeight() > HEIGHT_ALLOTTED_PER_PAGE) {
-                                currentPDFLayout = (LinearLayout) getLayoutInflater().inflate(R.layout.item_pdf_page, layoutPageParent, false);
+                                currentPDFLayout = (FrameLayout) getLayoutInflater().inflate(R.layout.item_pdf_page, layoutPageParent, false);
                                 currentPDFLayout.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorWhite));
                                 pdfPageViewList.add(currentPDFLayout);
                                 currentPageHeight = 0;
+
+                                // Add watermark layout
+                                watermarkPDFView = getWatermarkView(pageIndex);
+                                if (watermarkPDFView != null && watermarkPDFView.getView() != null) {
+                                    currentPDFLayout.addView(watermarkPDFView.getView());
+                                }
+
+                                currentPDFView = new PDFVerticalView(getApplicationContext()).getView();
+                                currentPDFView.setLayoutParams(verticalPageLayoutParams);
+                                currentPDFLayout.addView(currentPDFView);
 
                                 // Add page header again
                                 if (heightRequiredByHeader > 0) {
@@ -178,7 +206,7 @@ public abstract class PDFCreatorActivity extends AppCompatActivity implements Vi
                                     addViewToTempLayout(layoutPageParent, layoutHeader);
                                     currentPageHeight += heightRequiredByHeader;
                                     layoutPageParent.removeView(layoutHeader);
-                                    currentPDFLayout.addView(layoutHeader);
+                                    currentPDFView.addView(layoutHeader);
 
                                     pageIndex = pageIndex + 1;
                                 }
@@ -187,7 +215,7 @@ public abstract class PDFCreatorActivity extends AppCompatActivity implements Vi
                             currentPageHeight += viewItem.getHeight();
 
                             layoutPageParent.removeView(viewItem);
-                            currentPDFLayout.addView(viewItem);
+                            currentPDFView.addView(viewItem);
 
                             // See if we have enough space to add Next View with Footer
                             // We we don't, add Footer View to current page
@@ -219,7 +247,7 @@ public abstract class PDFCreatorActivity extends AppCompatActivity implements Vi
                                     addViewToTempLayout(layoutPageParent, layoutFooter);
                                     currentPageHeight += heightRequiredByFooter;
                                     layoutPageParent.removeView(layoutFooter);
-                                    currentPDFLayout.addView(layoutFooter);
+                                    currentPDFView.addView(layoutFooter);
                                 }
                             }
                         }
@@ -260,10 +288,10 @@ public abstract class PDFCreatorActivity extends AppCompatActivity implements Vi
      * Get header per page, starts with page: 0
      * MAKE SURE HEIGHT OF EVERY HEADER IS SAME FOR EVERY PAGE
      *
-     * @param page page number
+     * @param forPage page number
      * @return View for header
      */
-    protected abstract PDFHeaderView getHeaderView(int page);
+    protected abstract PDFHeaderView getHeaderView(int forPage);
 
     /**
      * Content that has to be paginated
@@ -276,10 +304,21 @@ public abstract class PDFCreatorActivity extends AppCompatActivity implements Vi
      * Get header per page, starts with page: 0
      * MAKE SURE HEIGHT OF EVERY FOOTER IS SAME FOR EVERY PAGE
      *
-     * @param page page number
+     * @param forPage page number
      * @return View for header
      */
-    protected abstract PDFFooterView getFooterView(int page);
+    protected abstract PDFFooterView getFooterView(int forPage);
+
+    /**
+     * Can add watermark images to per page, starts with page: 0
+     *
+     * @param forPage page number
+     * @return PDFImageView or null
+     */
+    @Nullable
+    protected PDFImageView getWatermarkView(int forPage) {
+        return null;
+    }
 
     protected abstract void onNextClicked(File savedPDFFile);
 }

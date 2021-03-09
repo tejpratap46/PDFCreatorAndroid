@@ -81,7 +81,7 @@ public class PDFTextView extends PDFView implements Serializable {
     }
 
     @Override
-    public PDFTextView setLayout(LinearLayout.LayoutParams layoutParams) {
+    public PDFTextView setLayout(ViewGroup.LayoutParams layoutParams) {
         super.setLayout(layoutParams);
         return this;
     }

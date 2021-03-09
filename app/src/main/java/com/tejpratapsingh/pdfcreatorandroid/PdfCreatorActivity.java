@@ -12,9 +12,12 @@ import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
 import android.view.Gravity;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import androidx.annotation.Nullable;
 
 import com.tejpratapsingh.pdfcreator.activity.PDFCreatorActivity;
 import com.tejpratapsingh.pdfcreator.utils.PDFUtil;
@@ -26,7 +29,6 @@ import com.tejpratapsingh.pdfcreator.views.basic.PDFHorizontalView;
 import com.tejpratapsingh.pdfcreator.views.basic.PDFImageView;
 import com.tejpratapsingh.pdfcreator.views.basic.PDFLineSeparatorView;
 import com.tejpratapsingh.pdfcreator.views.basic.PDFTextView;
-import com.tejpratapsingh.pdfcreator.views.basic.PDFView;
 
 import java.io.File;
 import java.util.Locale;
@@ -169,6 +171,22 @@ public class PdfCreatorActivity extends PDFCreatorActivity {
         footerView.addView(pdfTextViewPage);
 
         return footerView;
+    }
+
+    @Nullable
+    @Override
+    protected PDFImageView getWatermarkView(int forPage) {
+        PDFImageView pdfImageView = new PDFImageView(getApplicationContext());
+        FrameLayout.LayoutParams childLayoutParams = new FrameLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                200, Gravity.CENTER);
+        pdfImageView.setLayout(childLayoutParams);
+
+        pdfImageView.setImageResource(R.drawable.ic_pdf);
+        pdfImageView.setImageScale(ImageView.ScaleType.FIT_CENTER);
+        pdfImageView.getView().setAlpha(0.3F);
+
+        return pdfImageView;
     }
 
     @Override

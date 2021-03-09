@@ -59,7 +59,7 @@ public class PDFImageView extends PDFView implements Serializable {
     }
 
     @Override
-    public PDFImageView setLayout(LinearLayout.LayoutParams layoutParams) {
+    public PDFImageView setLayout(ViewGroup.LayoutParams layoutParams) {
         super.setLayout(layoutParams);
         return this;
     }
