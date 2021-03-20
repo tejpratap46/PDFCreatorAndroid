@@ -13,6 +13,8 @@ import com.tejpratapsingh.pdfcreator.utils.FileManager;
 import com.tejpratapsingh.pdfcreator.utils.PDFUtil;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -44,16 +46,17 @@ public class MainActivity extends AppCompatActivity {
                 // Create Temp File to save Pdf To
                 final File savedPDFFile = FileManager.getInstance().createTempFile(getApplicationContext(), "pdf", false);
                 // Generate Pdf From Html
-                PDFUtil.generatePDFFromHTML(getApplicationContext(), savedPDFFile, " <!DOCTYPE html>\n" +
+                PDFUtil.generatePDFFromHTML(getApplicationContext(), savedPDFFile, "<!DOCTYPE html>\n" +
                         "<html>\n" +
                         "<body>\n" +
                         "\n" +
-                        "<h1>My First Heading</h1>\n" +
+                        "<h1>My First Heading.</h1>\n" +
                         "<p>My first paragraph.</p>\n" +
-                        " <a href='https://www.example.com'>This is a link</a>" +
+                        "<p>!1 @2 #3 $4 %5 ^6 &7 *8 (9 )0</p>\n" +
+                        "<a href='https://www.example.com'>This is a link</a>" +
                         "\n" +
                         "</body>\n" +
-                        "</html> ", new PDFPrint.OnPDFPrintListener() {
+                        "</html>", new PDFPrint.OnPDFPrintListener() {
                     @Override
                     public void onSuccess(File file) {
                         // Open Pdf Viewer

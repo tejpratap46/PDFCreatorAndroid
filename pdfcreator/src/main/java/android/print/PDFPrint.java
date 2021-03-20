@@ -62,7 +62,7 @@ public class PDFPrint {
                 }, null);
             }
         });
-        mWebView.loadData(htmlString, "text/HTML", "UTF-8");
+        mWebView.loadData(htmlString.replaceAll("#", "%23"), "text/HTML", "UTF-8");
     }
 
     public static void generatePDFFromWebView(final File file, final WebView webView, final OnPDFPrintListener onPDFPrintListener) {
