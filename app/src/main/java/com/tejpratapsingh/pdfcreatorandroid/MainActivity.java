@@ -53,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
                         "<h1>My First Heading.</h1>\n" +
                         "<p>My first paragraph.</p>\n" +
                         "<p>!1 @2 #3 $4 %5 ^6 &7 *8 (9 )0</p>\n" +
+                        "<p>@#&=*+-_.,:!?()/~'%</p>\n" +
                         "<a href='https://www.example.com'>This is a link</a>" +
                         "\n" +
                         "</body>\n" +
