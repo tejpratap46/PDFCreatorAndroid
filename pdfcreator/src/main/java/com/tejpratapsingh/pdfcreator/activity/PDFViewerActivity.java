@@ -3,7 +3,6 @@ package com.tejpratapsingh.pdfcreator.activity;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,8 +16,9 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
-import com.github.chrisbanes.photoview.PhotoView;
 import com.tejpratapsingh.pdfcreator.R;
+import com.tejpratapsingh.pdfcreator.custom.TouchImageView;
+import com.tejpratapsingh.pdfcreator.custom.TouchImageViewFling;
 import com.tejpratapsingh.pdfcreator.custom.ViewPagerForPhotoView;
 import com.tejpratapsingh.pdfcreator.utils.PDFUtil;
 
@@ -114,7 +114,7 @@ public class PDFViewerActivity extends AppCompatActivity {
 
             Bitmap currentImage = pdfBitmapList.get(position);
 
-            ((PhotoView) rootView.findViewById(R.id.imageViewItemPdfViewer)).setImageBitmap(currentImage);
+            ((TouchImageViewFling) rootView.findViewById(R.id.imageViewItemPdfViewer)).setImageBitmap(currentImage);
             ((AppCompatTextView) rootView.findViewById(R.id.textViewPdfViewerPageNumber)).setText(String.format(Locale.getDefault(), "%d OF %d", position + 1, pdfBitmapList.size()));
 
             return rootView;

@@ -13,10 +13,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.core.content.ContextCompat;
 
-import com.github.chrisbanes.photoview.PhotoView;
 import com.tejpratapsingh.pdfcreator.R;
+import com.tejpratapsingh.pdfcreator.custom.TouchImageView;
+import com.tejpratapsingh.pdfcreator.custom.TouchImageViewFling;
 import com.tejpratapsingh.pdfcreator.utils.FileManager;
 import com.tejpratapsingh.pdfcreator.utils.PDFUtil;
 import com.tejpratapsingh.pdfcreator.views.PDFBody;
@@ -40,7 +42,7 @@ public abstract class PDFCreatorActivity extends AppCompatActivity implements Vi
 
     LinearLayout layoutPageParent, layoutPrintPreview;
     TextView textViewGeneratingPDFHolder, textViewPageNumber, textViewPreviewNotAvailable;
-    PhotoView imageViewPDFPreview;
+    AppCompatImageView imageViewPDFPreview;
     Button buttonEmailVisit;
     ImageButton buttonNextPage, buttonPreviousPage;
 
@@ -56,7 +58,7 @@ public abstract class PDFCreatorActivity extends AppCompatActivity implements Vi
         layoutPageParent = findViewById(R.id.layoutPdfPreview);
         textViewGeneratingPDFHolder = findViewById(R.id.textViewPdfGeneratingHolder);
         layoutPrintPreview = findViewById(R.id.layoutPrintPreview);
-        imageViewPDFPreview = layoutPrintPreview.findViewById(R.id.imagePreviewPdfPrescription);
+        imageViewPDFPreview = layoutPrintPreview.findViewById(R.id.imagePreviewPdf);
         textViewPageNumber = layoutPrintPreview.findViewById(R.id.textViewPreviewPageNumber);
         textViewPreviewNotAvailable = layoutPrintPreview.findViewById(R.id.textViewPreviewPDFNotSupported);
 

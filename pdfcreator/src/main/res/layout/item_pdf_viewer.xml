@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.github.chrisbanes.photoview.PhotoView
+    <com.tejpratapsingh.pdfcreator.custom.TouchImageViewFling
         android:id="@+id/imageViewItemPdfViewer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

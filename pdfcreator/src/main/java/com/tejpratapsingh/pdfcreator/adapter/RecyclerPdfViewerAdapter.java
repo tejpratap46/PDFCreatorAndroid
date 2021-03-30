@@ -10,8 +10,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.github.chrisbanes.photoview.PhotoView;
 import com.tejpratapsingh.pdfcreator.R;
+import com.tejpratapsingh.pdfcreator.custom.TouchImageView;
 
 import java.util.LinkedList;
 import java.util.Locale;
@@ -19,7 +19,7 @@ import java.util.Locale;
 public class RecyclerPdfViewerAdapter extends RecyclerView.Adapter<RecyclerPdfViewerAdapter.ViewHolderPdfPage> {
     private static final String TAG = "RecyclerPdfViewerAdapte";
 
-    private LinkedList<Bitmap> pdfPagesImage = new LinkedList<>();
+    private final LinkedList<Bitmap> pdfPagesImage = new LinkedList<>();
 
     public RecyclerPdfViewerAdapter(@NonNull LinkedList<Bitmap> pdfPagesImage) {
         this.pdfPagesImage.addAll(pdfPagesImage);
@@ -49,7 +49,7 @@ public class RecyclerPdfViewerAdapter extends RecyclerView.Adapter<RecyclerPdfVi
 
     static class ViewHolderPdfPage extends RecyclerView.ViewHolder {
 
-        PhotoView imageView;
+        TouchImageView imageView;
         TextView textViewPageNumber;
 
         ViewHolderPdfPage(@NonNull View itemView) {

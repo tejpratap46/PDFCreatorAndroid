@@ -40,15 +40,22 @@
             android:layout_weight="1"
             android:orientation="vertical">
 
-            <com.github.chrisbanes.photoview.PhotoView
-                android:id="@+id/imagePreviewPdfPrescription"
+            <com.tejpratapsingh.pdfcreator.custom.ZoomLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/grey_800"
-                android:paddingLeft="20dp"
-                android:paddingTop="100dp"
-                android:paddingRight="20dp"
-                android:paddingBottom="20dp" />
+                android:layout_height="match_parent">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/imagePreviewPdf"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/grey_800"
+                    android:contentDescription="@string/pdf_page_as_image"
+                    android:paddingLeft="20dp"
+                    android:paddingTop="100dp"
+                    android:paddingRight="20dp"
+                    android:paddingBottom="20dp" />
+
+            </com.tejpratapsingh.pdfcreator.custom.ZoomLayout>
 
             <TextView
                 android:id="@+id/textViewPreviewPDFNotSupported"
