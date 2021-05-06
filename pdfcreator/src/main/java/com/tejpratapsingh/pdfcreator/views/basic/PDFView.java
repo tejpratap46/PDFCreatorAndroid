@@ -73,7 +73,7 @@ public class PDFView implements Serializable {
         return childViewList;
     }
 
-    protected PDFView setLayout(ViewGroup.LayoutParams layoutParams) {
+    public PDFView setLayout(ViewGroup.LayoutParams layoutParams) {
         this.currentView.setLayoutParams(layoutParams);
         return this;
     }

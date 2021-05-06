@@ -11,6 +11,7 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
 import android.view.Gravity;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -25,6 +26,7 @@ import com.tejpratapsingh.pdfcreator.views.PDFBody;
 import com.tejpratapsingh.pdfcreator.views.PDFFooterView;
 import com.tejpratapsingh.pdfcreator.views.PDFHeaderView;
 import com.tejpratapsingh.pdfcreator.views.PDFTableView;
+import com.tejpratapsingh.pdfcreator.views.basic.PDFCustomView;
 import com.tejpratapsingh.pdfcreator.views.basic.PDFHorizontalView;
 import com.tejpratapsingh.pdfcreator.views.basic.PDFImageView;
 import com.tejpratapsingh.pdfcreator.views.basic.PDFLineSeparatorView;
@@ -112,10 +114,11 @@ public class PdfCreatorActivity extends PDFCreatorActivity {
                 8, 0));
         pdfBody.addView(lineSeparatorView2);
 
-        String[] textInTable = {"1", "2", "3", "4"};
-
         PDFLineSeparatorView lineSeparatorView3 = new PDFLineSeparatorView(getApplicationContext()).setBackgroundColor(Color.WHITE);
         pdfBody.addView(lineSeparatorView3);
+
+        int[] widthPercent = {20, 20, 20, 40}; // Sum should be equal to 100%
+        String[] textInTable = {"1", "2", "3", "4"};
         PDFTextView pdfTableTitleView = new PDFTextView(getApplicationContext(), PDFTextView.PDF_TEXT_SIZE.P);
         pdfTableTitleView.setText("Table Example");
         pdfBody.addView(pdfTableTitleView);
@@ -126,6 +129,7 @@ public class PdfCreatorActivity extends PDFCreatorActivity {
             pdfTextView.setText("Header Title: " + s);
             tableHeader.addToRow(pdfTextView);
         }
+
         PDFTableView.PDFTableRowView tableRowView1 = new PDFTableView.PDFTableRowView(getApplicationContext());
         for (String s : textInTable) {
             PDFTextView pdfTextView = new PDFTextView(getApplicationContext(), PDFTextView.PDF_TEXT_SIZE.P);
@@ -134,6 +138,7 @@ public class PdfCreatorActivity extends PDFCreatorActivity {
         }
 
         PDFTableView tableView = new PDFTableView(getApplicationContext(), tableHeader, tableRowView1);
+
         for (int i = 0; i < 40; i++) {
             // Create 10 rows
             PDFTableView.PDFTableRowView tableRowView = new PDFTableView.PDFTableRowView(getApplicationContext());
@@ -144,6 +149,7 @@ public class PdfCreatorActivity extends PDFCreatorActivity {
             }
             tableView.addRow(tableRowView);
         }
+        tableView.setColumnWidth(widthPercent);
         pdfBody.addView(tableView);
 
         PDFLineSeparatorView lineSeparatorView4 = new PDFLineSeparatorView(getApplicationContext()).setBackgroundColor(Color.BLACK);
