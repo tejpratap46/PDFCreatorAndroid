@@ -73,7 +73,7 @@ public class PdfViewerActivity extends PDFViewerActivity {
             intentShareFile.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
             intentShareFile.putExtra(Intent.EXTRA_STREAM,
-                    Uri.parse("file://" + fileToShare.getAbsolutePath()));
+                    apkURI);
 
             startActivity(Intent.createChooser(intentShareFile, "Share File"));
         }
