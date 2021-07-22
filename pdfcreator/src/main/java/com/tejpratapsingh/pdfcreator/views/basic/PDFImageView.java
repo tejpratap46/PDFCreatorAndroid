@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import androidx.annotation.DrawableRes;
+import androidx.annotation.NonNull;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -16,7 +17,7 @@ import java.io.Serializable;
 
 public class PDFImageView extends PDFView implements Serializable {
 
-    public PDFImageView(Context context) {
+    public PDFImageView(@NonNull Context context) {
         super(context);
 
         ImageView imageView = new ImageView(context);
@@ -29,7 +30,7 @@ public class PDFImageView extends PDFView implements Serializable {
     }
 
     @Override
-    protected PDFView addView(PDFView viewToAdd) throws IllegalStateException {
+    protected PDFView addView(@NonNull PDFView viewToAdd) throws IllegalStateException {
         throw new IllegalStateException("Cannot add subview to Image");
     }
 
@@ -38,12 +39,12 @@ public class PDFImageView extends PDFView implements Serializable {
         return this;
     }
 
-    public PDFImageView setImageBitmap(Bitmap bitmap) {
+    public PDFImageView setImageBitmap(@NonNull Bitmap bitmap) {
         ((ImageView) super.getView()).setImageBitmap(bitmap);
         return this;
     }
 
-    public PDFImageView setImageFile(File imageFile) throws FileNotFoundException {
+    public PDFImageView setImageFile(@NonNull File imageFile) throws FileNotFoundException {
         FileInputStream fileInputStream = new FileInputStream(imageFile);
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inPreferredConfig = Bitmap.Config.RGB_565;
@@ -53,13 +54,13 @@ public class PDFImageView extends PDFView implements Serializable {
         return this;
     }
 
-    public PDFImageView setImageScale(ImageView.ScaleType scaleType) {
+    public PDFImageView setImageScale(@NonNull ImageView.ScaleType scaleType) {
         ((ImageView) super.getView()).setScaleType(scaleType);
         return this;
     }
 
     @Override
-    public PDFImageView setLayout(ViewGroup.LayoutParams layoutParams) {
+    public PDFImageView setLayout(@NonNull ViewGroup.LayoutParams layoutParams) {
         super.setLayout(layoutParams);
         return this;
     }

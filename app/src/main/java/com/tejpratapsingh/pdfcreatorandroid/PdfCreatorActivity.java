@@ -5,13 +5,11 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
-import android.text.Html;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
 import android.view.Gravity;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -19,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.core.text.HtmlCompat;
 
 import com.tejpratapsingh.pdfcreator.activity.PDFCreatorActivity;
 import com.tejpratapsingh.pdfcreator.utils.PDFUtil;
@@ -26,7 +25,7 @@ import com.tejpratapsingh.pdfcreator.views.PDFBody;
 import com.tejpratapsingh.pdfcreator.views.PDFFooterView;
 import com.tejpratapsingh.pdfcreator.views.PDFHeaderView;
 import com.tejpratapsingh.pdfcreator.views.PDFTableView;
-import com.tejpratapsingh.pdfcreator.views.basic.PDFCustomView;
+import com.tejpratapsingh.pdfcreator.views.basic.PDFPageBreakView;
 import com.tejpratapsingh.pdfcreator.views.basic.PDFHorizontalView;
 import com.tejpratapsingh.pdfcreator.views.basic.PDFImageView;
 import com.tejpratapsingh.pdfcreator.views.basic.PDFLineSeparatorView;
@@ -123,6 +122,9 @@ public class PdfCreatorActivity extends PDFCreatorActivity {
         pdfTableTitleView.setText("Table Example");
         pdfBody.addView(pdfTableTitleView);
 
+        final PDFPageBreakView pdfPageBreakView = new PDFPageBreakView(getApplicationContext());
+        pdfBody.addView(pdfPageBreakView);
+
         PDFTableView.PDFTableRowView tableHeader = new PDFTableView.PDFTableRowView(getApplicationContext());
         for (String s : textInTable) {
             PDFTextView pdfTextView = new PDFTextView(getApplicationContext(), PDFTextView.PDF_TEXT_SIZE.P);
@@ -156,7 +158,7 @@ public class PdfCreatorActivity extends PDFCreatorActivity {
         pdfBody.addView(lineSeparatorView4);
 
         PDFTextView pdfIconLicenseView = new PDFTextView(getApplicationContext(), PDFTextView.PDF_TEXT_SIZE.H3);
-        Spanned icon8Link = Html.fromHtml("Icon from <a href='https://icons8.com'>https://icons8.com</a>");
+        Spanned icon8Link = HtmlCompat.fromHtml("Icon from <a href='https://icons8.com'>https://icons8.com</a>", HtmlCompat.FROM_HTML_MODE_LEGACY);
         pdfIconLicenseView.getView().setText(icon8Link);
         pdfBody.addView(pdfIconLicenseView);
 

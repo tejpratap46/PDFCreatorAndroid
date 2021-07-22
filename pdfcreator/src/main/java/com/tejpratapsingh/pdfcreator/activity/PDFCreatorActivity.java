@@ -2,6 +2,7 @@ package com.tejpratapsingh.pdfcreator.activity;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -17,13 +18,12 @@ import androidx.appcompat.widget.AppCompatImageView;
 import androidx.core.content.ContextCompat;
 
 import com.tejpratapsingh.pdfcreator.R;
-import com.tejpratapsingh.pdfcreator.custom.TouchImageView;
-import com.tejpratapsingh.pdfcreator.custom.TouchImageViewFling;
 import com.tejpratapsingh.pdfcreator.utils.FileManager;
 import com.tejpratapsingh.pdfcreator.utils.PDFUtil;
 import com.tejpratapsingh.pdfcreator.views.PDFBody;
 import com.tejpratapsingh.pdfcreator.views.PDFFooterView;
 import com.tejpratapsingh.pdfcreator.views.PDFHeaderView;
+import com.tejpratapsingh.pdfcreator.views.basic.PDFPageBreakView;
 import com.tejpratapsingh.pdfcreator.views.basic.PDFImageView;
 import com.tejpratapsingh.pdfcreator.views.basic.PDFVerticalView;
 import com.tejpratapsingh.pdfcreator.views.basic.PDFView;
@@ -85,7 +85,11 @@ public abstract class PDFCreatorActivity extends AppCompatActivity implements Vi
         if (getBodyViews() != null) {
             for (PDFView pdfView : getBodyViews().getChildViewList()) {
                 View bodyView = pdfView.getView();
-                bodyView.setTag(PDFBody.class.getSimpleName());
+                if (pdfView instanceof PDFPageBreakView) {
+                    bodyView.setTag(PDFPageBreakView.class.getSimpleName());
+                } else {
+                    bodyView.setTag(PDFBody.class.getSimpleName());
+                }
                 bodyViewList.add(bodyView);
                 addViewToTempLayout(layoutPageParent, bodyView);
             }
@@ -185,7 +189,13 @@ public abstract class PDFCreatorActivity extends AppCompatActivity implements Vi
                         for (int i = 0; i < tempViewList.size(); i++) {
                             View viewItem = tempViewList.get(i);
 
+                            boolean isPageBreakView = false;
+                            if (viewItem.getTag() != null && viewItem.getTag() instanceof String) {
+                                isPageBreakView = PDFPageBreakView.class.getSimpleName().equalsIgnoreCase((String) viewItem.getTag());
+                            }
+
                             if (currentPageHeight + viewItem.getHeight() > HEIGHT_ALLOTTED_PER_PAGE) {
+                                // this will be exceed current page, create a new page and add this view to that page
                                 currentPDFLayout = (FrameLayout) getLayoutInflater().inflate(R.layout.item_pdf_page, layoutPageParent, false);
                                 currentPDFLayout.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorWhite));
                                 pdfPageViewList.add(currentPDFLayout);
@@ -214,10 +224,16 @@ public abstract class PDFCreatorActivity extends AppCompatActivity implements Vi
                                 }
                             }
 
-                            currentPageHeight += viewItem.getHeight();
+                            if (!isPageBreakView) {
+                                // if not empty view, add
+                                currentPageHeight += viewItem.getHeight();
 
-                            layoutPageParent.removeView(viewItem);
-                            currentPDFView.addView(viewItem);
+                                layoutPageParent.removeView(viewItem);
+                                currentPDFView.addView(viewItem);
+                            } else {
+                                Log.d(TAG, "run: This is PageBreakView");
+                                currentPageHeight = HEIGHT_ALLOTTED_PER_PAGE;
+                            }
 
                             // See if we have enough space to add Next View with Footer
                             // We we don't, add Footer View to current page
@@ -239,17 +255,17 @@ public abstract class PDFCreatorActivity extends AppCompatActivity implements Vi
                                 shouldAddFooterNow = true;
                             }
 
-                            if (shouldAddFooterNow) {
+                            if (isPageBreakView || shouldAddFooterNow) {
                                 // Cannot Add Next View with Footer in current Page
                                 // Add Footer View to Current Page
 
                                 if (heightRequiredByFooter > 0) {
-                                    // Footer is NOT prematurely added, so we need to subtract 1 from pageIndex
+                                    // Footer is NOT prematurely added like header, so we need to subtract 1 from pageIndex
                                     LinearLayout layoutFooter = getFooterView(pageIndex - 1).getView();
                                     addViewToTempLayout(layoutPageParent, layoutFooter);
-                                    currentPageHeight += heightRequiredByFooter;
                                     layoutPageParent.removeView(layoutFooter);
                                     currentPDFView.addView(layoutFooter);
+                                    currentPageHeight = HEIGHT_ALLOTTED_PER_PAGE;
                                 }
                             }
                         }

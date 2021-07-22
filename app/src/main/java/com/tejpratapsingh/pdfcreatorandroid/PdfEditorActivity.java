@@ -15,6 +15,7 @@ import android.webkit.WebViewClient;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.tejpratapsingh.pdfcreator.utils.FileManager;
 import com.tejpratapsingh.pdfcreator.utils.PDFUtil;
@@ -64,8 +65,7 @@ public class PdfEditorActivity extends AppCompatActivity {
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setTitle("Pdf Editor");
-            getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources()
-                    .getColor(R.color.colorTransparentBlack)));
+            getSupportActionBar().setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.color.colorTransparentBlack));
         }
 
         webView = (WebView) findViewById(R.id.webViewEditor);

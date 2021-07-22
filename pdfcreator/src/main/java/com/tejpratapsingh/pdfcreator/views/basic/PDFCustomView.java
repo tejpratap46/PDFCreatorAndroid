@@ -5,22 +5,24 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import androidx.annotation.NonNull;
+
 import java.io.Serializable;
 
 public class PDFCustomView extends PDFView implements Serializable {
 
-    private PDFCustomView(Context context) {
+    private PDFCustomView(@NonNull Context context) {
         super(context);
     }
 
-    public PDFCustomView(Context context, View view, int width, int height) {
+    public PDFCustomView(@NonNull Context context, @NonNull View view, int width, int height) {
         super(context);
         view.setLayoutParams(new ViewGroup.LayoutParams(width, height));
 
         super.setView(view);
     }
 
-    public PDFCustomView(Context context, View view, int width, int height, int weight) {
+    public PDFCustomView(@NonNull Context context, @NonNull View view, int width, int height, int weight) {
         super(context);
         view.setLayoutParams(new LinearLayout.LayoutParams(width, height, weight));
 

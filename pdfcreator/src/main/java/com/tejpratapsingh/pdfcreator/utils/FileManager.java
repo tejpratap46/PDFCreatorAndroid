@@ -519,24 +519,6 @@ public class FileManager {
     }
 
     /**
-     * Get Available storage of external storage
-     *
-     * @return size in bytes
-     */
-    public long getAvailableStorageSpace() {
-        return Environment.getExternalStorageDirectory().getFreeSpace();
-    }
-
-    /**
-     * Get Total Space of external storage
-     *
-     * @return size in bytes
-     */
-    public long getTotalStorageSpace() {
-        return Environment.getExternalStorageDirectory().getTotalSpace();
-    }
-
-    /**
      * Get human readable file size
      *
      * @param fileSizeInKb size of file in kb

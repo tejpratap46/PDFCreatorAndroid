@@ -4,6 +4,8 @@ import android.content.Context;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import androidx.annotation.NonNull;
+
 import java.io.Serializable;
 
 public class PDFVerticalView extends PDFView implements Serializable {
@@ -23,14 +25,14 @@ public class PDFVerticalView extends PDFView implements Serializable {
     }
 
     @Override
-    public PDFVerticalView addView(PDFView viewToAdd) {
+    public PDFVerticalView addView(@NonNull PDFView viewToAdd) {
         getView().addView(viewToAdd.getView());
         super.addView(viewToAdd);
         return this;
     }
 
     @Override
-    public PDFVerticalView setLayout(ViewGroup.LayoutParams layoutParams) {
+    public PDFVerticalView setLayout(@NonNull ViewGroup.LayoutParams layoutParams) {
         super.setLayout(layoutParams);
         return this;
     }

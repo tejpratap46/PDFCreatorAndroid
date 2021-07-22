@@ -4,7 +4,8 @@ import android.content.Context;
 import android.view.Gravity;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
+
+import androidx.annotation.NonNull;
 
 import java.io.Serializable;
 
@@ -24,14 +25,14 @@ public class PDFFrameLayout extends PDFView implements Serializable {
     }
 
     @Override
-    public PDFFrameLayout addView(PDFView viewToAdd) {
+    public PDFFrameLayout addView(@NonNull PDFView viewToAdd) {
         getView().addView(viewToAdd.getView());
         super.addView(viewToAdd);
         return this;
     }
 
     @Override
-    public PDFView setLayout(ViewGroup.LayoutParams layoutParams) {
+    public PDFView setLayout(@NonNull ViewGroup.LayoutParams layoutParams) {
         return super.setLayout(layoutParams);
     }
 

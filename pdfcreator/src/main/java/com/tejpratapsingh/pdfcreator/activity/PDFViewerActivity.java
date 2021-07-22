@@ -17,7 +17,6 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.tejpratapsingh.pdfcreator.R;
-import com.tejpratapsingh.pdfcreator.custom.TouchImageView;
 import com.tejpratapsingh.pdfcreator.custom.TouchImageViewFling;
 import com.tejpratapsingh.pdfcreator.custom.ViewPagerForPhotoView;
 import com.tejpratapsingh.pdfcreator.utils.PDFUtil;

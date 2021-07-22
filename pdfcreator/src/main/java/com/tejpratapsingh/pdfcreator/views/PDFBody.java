@@ -1,5 +1,7 @@
 package com.tejpratapsingh.pdfcreator.views;
 
+import androidx.annotation.NonNull;
+
 import com.tejpratapsingh.pdfcreator.views.basic.PDFView;
 
 import java.io.Serializable;
@@ -12,7 +14,7 @@ public class PDFBody implements Serializable {
     public PDFBody() {
     }
 
-    public PDFBody addView(PDFView pdfViewToAdd) {
+    public PDFBody addView(@NonNull PDFView pdfViewToAdd) {
         if (pdfViewToAdd instanceof PDFTableView) {
             childViewList.addAll(pdfViewToAdd.getChildViewList());
         } else {

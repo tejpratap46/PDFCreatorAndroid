@@ -5,6 +5,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import androidx.annotation.NonNull;
+
 public class PDFLineSeparatorView extends PDFView {
     public PDFLineSeparatorView(Context context) {
         super(context);
@@ -18,12 +20,12 @@ public class PDFLineSeparatorView extends PDFView {
     }
 
     @Override
-    protected PDFLineSeparatorView addView(PDFView viewToAdd) throws IllegalStateException {
+    protected PDFLineSeparatorView addView(@NonNull PDFView viewToAdd) throws IllegalStateException {
         throw new IllegalStateException("Cannot add subview to Line Separator");
     }
 
     @Override
-    public PDFLineSeparatorView setLayout(ViewGroup.LayoutParams layoutParams) {
+    public PDFLineSeparatorView setLayout(@NonNull ViewGroup.LayoutParams layoutParams) {
         super.setLayout(layoutParams);
         return this;
     }

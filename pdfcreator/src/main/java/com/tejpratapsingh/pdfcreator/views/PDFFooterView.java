@@ -4,6 +4,8 @@ import android.content.Context;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import androidx.annotation.NonNull;
+
 import com.tejpratapsingh.pdfcreator.views.basic.PDFCustomView;
 import com.tejpratapsingh.pdfcreator.views.basic.PDFVerticalView;
 import com.tejpratapsingh.pdfcreator.views.basic.PDFView;
@@ -12,7 +14,7 @@ import java.io.Serializable;
 
 public class PDFFooterView extends PDFVerticalView implements Serializable {
 
-    public PDFFooterView(Context context) {
+    public PDFFooterView(@NonNull Context context) {
         super(context);
 
         PDFCustomView emptySpaceView = new PDFCustomView(context, new View(context), 0, 0, 1);
@@ -20,7 +22,7 @@ public class PDFFooterView extends PDFVerticalView implements Serializable {
     }
 
     @Override
-    public PDFFooterView addView(PDFView viewToAdd) {
+    public PDFFooterView addView(@NonNull PDFView viewToAdd) {
         super.addView(viewToAdd);
         return this;
     }

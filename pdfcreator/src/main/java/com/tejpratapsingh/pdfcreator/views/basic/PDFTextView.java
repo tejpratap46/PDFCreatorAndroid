@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+
 import java.io.Serializable;
 
 public class PDFTextView extends PDFView implements Serializable {
@@ -60,7 +62,7 @@ public class PDFTextView extends PDFView implements Serializable {
     }
 
     @Override
-    protected PDFView addView(PDFView viewToAdd) throws IllegalStateException {
+    protected PDFView addView(@NonNull PDFView viewToAdd) throws IllegalStateException {
         throw new IllegalStateException("Cannot add subview to TextView");
     }
 
@@ -81,7 +83,7 @@ public class PDFTextView extends PDFView implements Serializable {
     }
 
     @Override
-    public PDFTextView setLayout(ViewGroup.LayoutParams layoutParams) {
+    public PDFTextView setLayout(@NonNull ViewGroup.LayoutParams layoutParams) {
         super.setLayout(layoutParams);
         return this;
     }

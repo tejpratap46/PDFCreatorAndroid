@@ -4,6 +4,8 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -20,7 +22,7 @@ public class PDFView implements Serializable {
 
     private final Context context;
 
-    protected PDFView(Context context) {
+    protected PDFView(@NonNull Context context) {
         this.context = context;
     }
 
@@ -28,7 +30,7 @@ public class PDFView implements Serializable {
         return context;
     }
 
-    public PDFView setView(View view) {
+    public PDFView setView(@NonNull View view) {
         this.currentView = view;
         return this;
     }
@@ -60,7 +62,7 @@ public class PDFView implements Serializable {
         return this.currentView.getPaddingTop();
     }
 
-    protected PDFView addView(PDFView viewToAdd) throws IllegalStateException {
+    protected PDFView addView(@NonNull PDFView viewToAdd) throws IllegalStateException {
         if (viewToAdd.hasParent) {
             throw new IllegalStateException("View already has parent");
         }
@@ -73,7 +75,7 @@ public class PDFView implements Serializable {
         return childViewList;
     }
 
-    public PDFView setLayout(ViewGroup.LayoutParams layoutParams) {
+    public PDFView setLayout(@NonNull ViewGroup.LayoutParams layoutParams) {
         this.currentView.setLayoutParams(layoutParams);
         return this;
     }

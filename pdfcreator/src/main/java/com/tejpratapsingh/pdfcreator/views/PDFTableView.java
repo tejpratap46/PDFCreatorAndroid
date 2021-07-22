@@ -25,7 +25,7 @@ public class PDFTableView extends PDFView implements Serializable {
 
     private final PDFTableRowView headerRow, firstRow;
 
-    public PDFTableView(Context context, PDFTableRowView headerRow, PDFTableRowView firstRow) {
+    public PDFTableView(@NonNull Context context, @NonNull PDFTableRowView headerRow, @NonNull PDFTableRowView firstRow) {
         super(context);
         this.headerRow = headerRow;
         this.firstRow = firstRow;
@@ -44,7 +44,7 @@ public class PDFTableView extends PDFView implements Serializable {
      */
     @Deprecated
     @Override
-    public PDFTableView addView(PDFView viewToAdd) throws IllegalStateException {
+    public PDFTableView addView(@NonNull PDFView viewToAdd) throws IllegalStateException {
         throw new IllegalStateException("Add a row or column to add view");
     }
 
@@ -88,13 +88,13 @@ public class PDFTableView extends PDFView implements Serializable {
     }
 
     @Override
-    public PDFView setLayout(ViewGroup.LayoutParams layoutParams) {
+    public PDFView setLayout(@NonNull ViewGroup.LayoutParams layoutParams) {
         return super.setLayout(layoutParams);
     }
 
     public static class PDFTableRowView extends PDFHorizontalView implements Serializable {
 
-        public PDFTableRowView(Context context) {
+        public PDFTableRowView(@NonNull Context context) {
             super(context);
         }
 
@@ -105,7 +105,7 @@ public class PDFTableView extends PDFView implements Serializable {
          */
         @Deprecated
         @Override
-        public PDFHorizontalView addView(PDFView viewToAdd) {
+        public PDFHorizontalView addView(@NonNull PDFView viewToAdd) {
             throw new IllegalStateException("Cannot add subview to Horizontal View, Use createRow instead");
         }
 
@@ -137,7 +137,7 @@ public class PDFTableView extends PDFView implements Serializable {
          * @param TextViewToAdd add text
          * @return current instance
          */
-        public PDFTableRowView addToRow(PDFTextView TextViewToAdd) {
+        public PDFTableRowView addToRow(@NonNull PDFTextView TextViewToAdd) {
             TextViewToAdd.setLayout(new LinearLayout.LayoutParams(
                     0,
                     ViewGroup.LayoutParams.WRAP_CONTENT, 1));
