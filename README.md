@@ -85,7 +85,7 @@ verticalView.setView(View view);
 ```
 
 ## Example:
-An example is created, Look at [PdfCreatorActivity](https://github.com/tejpratap46/PDFCreatorAndroid/blob/master/app/src/main/java/com/tejpratapsingh/pdfcreatorandroid/PdfCreatorActivity.java) of app.
+An example is created, Look at [PdfCreatorExampleActivity](https://github.com/tejpratap46/PDFCreatorAndroid/blob/master/app/src/main/java/com/tejpratapsingh/pdfcreatorandroid/PdfCreatorExampleActivity.java) of app.
 
 ### VIEWS
 * PDFVerticalView
