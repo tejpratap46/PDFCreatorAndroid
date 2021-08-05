@@ -35,7 +35,7 @@ Step 2. Add the dependency
 * This library creates pages by adding views to a parent view unitil the next view is about to exceed current page. If next view exceeds current page, that view will be added to new page.
 
 ## Implementation
-* First thing first, Look at [PdfCreatorActivity](https://github.com/tejpratap46/PDFCreatorAndroid/blob/master/app/src/main/java/com/tejpratapsingh/pdfcreatorandroid/PdfCreatorActivity.java) of app.
+* First thing first, Look at [PdfCreatorActivity](https://github.com/tejpratap46/PDFCreatorAndroid/blob/master/app/src/main/java/com/tejpratapsingh/pdfcreatorandroid/PdfCreatorExampleActivity.java) of app.
 
 1. PDF creater uses views which can be rendered, So we need to exted an activity in order to create activity.
 2. Create a Empty `Activity` without any layout and extend it with `PDFCreatorActivity`. Do not set use `setContentView(int resourceId)` inside your created activity.
@@ -183,7 +183,7 @@ intentPdfViewer.putExtra(PdfViewerActivity.PDF_FILE_URI, pdfUri);
 
 startActivity(intentPdfViewer);
 ```
-You can see Example Code At: [PdfViewerActivity](https://github.com/tejpratap46/PDFCreatorAndroid/blob/master/app/src/main/java/com/tejpratapsingh/pdfcreatorandroid/PdfViewerActivity.java) of app.
+You can see Example Code At: [PdfViewerExampleActivity](https://github.com/tejpratap46/PDFCreatorAndroid/blob/master/app/src/main/java/com/tejpratapsingh/pdfcreatorandroid/PdfViewerExampleActivity.java) of app.
 
 ### Html To Pdf
 You can create a Pdf from Html using Utility function `PDFUtil.generatePDFFromHTML(getApplicationContext(), pdfFileToSave, "<html string />", callback);`
@@ -223,7 +223,7 @@ PDFUtil.generatePDFFromHTML(getApplicationContext(), savedPDFFile, " <!DOCTYPE h
 With this feature, you can directly create Pdf from whatever your WebView is showing. You can add `contenteditable="true"` and have user edit data and create pdf from edited Data.
 You can just call Utility function: `PDFUtil.generatePDFFromWebView(savedPDFFile, webView, callback)`
 
-You can see Example Code At: [PdfEditorActivity](https://github.com/tejpratap46/PDFCreatorAndroid/blob/master/app/src/main/java/com/tejpratapsingh/pdfcreatorandroid/PdfEditorActivity.java) of app.
+You can see Example Code At: [PdfEditorExampleActivity](https://github.com/tejpratap46/PDFCreatorAndroid/blob/master/app/src/main/java/com/tejpratapsingh/pdfcreatorandroid/PdfEditorExampleActivity.java) of app.
 
 ```java
 // Create Temp File to save Pdf To
