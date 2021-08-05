@@ -2,7 +2,6 @@ package com.tejpratapsingh.pdfcreatorandroid;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.print.PDFPrint;
@@ -24,7 +23,7 @@ import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 
-public class PdfEditorActivity extends AppCompatActivity {
+public class PdfEditorExampleActivity extends AppCompatActivity {
     private static final String TAG = "PdfEditorActivity";
 
     private WebView webView;
@@ -87,8 +86,8 @@ public class PdfEditorActivity extends AppCompatActivity {
                         // Open Pdf Viewer
                         Uri pdfUri = Uri.fromFile(savedPDFFile);
 
-                        Intent intentPdfViewer = new Intent(PdfEditorActivity.this, PdfViewerActivity.class);
-                        intentPdfViewer.putExtra(PdfViewerActivity.PDF_FILE_URI, pdfUri);
+                        Intent intentPdfViewer = new Intent(PdfEditorExampleActivity.this, PdfViewerExampleActivity.class);
+                        intentPdfViewer.putExtra(PdfViewerExampleActivity.PDF_FILE_URI, pdfUri);
 
                         startActivity(intentPdfViewer);
                     }

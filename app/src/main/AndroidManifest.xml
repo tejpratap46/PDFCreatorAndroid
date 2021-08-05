@@ -22,15 +22,15 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".PdfCreatorActivity"
+            android:name=".PdfCreatorExampleActivity"
             android:configChanges="orientation|screenSize"
             android:theme="@style/AppTheme.TransparentStatusBar" />
         <activity
-            android:name=".PdfViewerActivity"
+            android:name=".PdfViewerExampleActivity"
             android:configChanges="orientation|screenSize"
             android:theme="@style/AppTheme.TransparentStatusBar" />
         <activity
-            android:name=".PdfEditorActivity"
+            android:name=".PdfEditorExampleActivity"
             android:configChanges="orientation|screenSize"
             android:theme="@style/AppTheme.TransparentStatusBar" />
 

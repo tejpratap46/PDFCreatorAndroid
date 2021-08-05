@@ -13,8 +13,6 @@ import com.tejpratapsingh.pdfcreator.utils.FileManager;
 import com.tejpratapsingh.pdfcreator.utils.PDFUtil;
 
 import java.io.File;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -35,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         layoutPdfCreator.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, PdfCreatorActivity.class));
+                startActivity(new Intent(MainActivity.this, PdfCreatorExampleActivity.class));
             }
         });
 
@@ -63,8 +61,8 @@ public class MainActivity extends AppCompatActivity {
                         // Open Pdf Viewer
                         Uri pdfUri = Uri.fromFile(savedPDFFile);
 
-                        Intent intentPdfViewer = new Intent(MainActivity.this, PdfViewerActivity.class);
-                        intentPdfViewer.putExtra(PdfViewerActivity.PDF_FILE_URI, pdfUri);
+                        Intent intentPdfViewer = new Intent(MainActivity.this, PdfViewerExampleActivity.class);
+                        intentPdfViewer.putExtra(PdfViewerExampleActivity.PDF_FILE_URI, pdfUri);
 
                         startActivity(intentPdfViewer);
                     }
@@ -80,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
         layoutEditHtmlPdf.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, PdfEditorActivity.class));
+                startActivity(new Intent(MainActivity.this, PdfEditorExampleActivity.class));
             }
         });
     }

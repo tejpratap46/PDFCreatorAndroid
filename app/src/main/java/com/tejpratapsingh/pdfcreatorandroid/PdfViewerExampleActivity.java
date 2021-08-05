@@ -19,7 +19,7 @@ import com.tejpratapsingh.pdfcreator.utils.PDFUtil;
 import java.io.File;
 import java.net.URLConnection;
 
-public class PdfViewerActivity extends PDFViewerActivity {
+public class PdfViewerExampleActivity extends PDFViewerActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,7 +55,7 @@ public class PdfViewerActivity extends PDFViewerActivity {
             printAttributeBuilder.setMediaSize(PrintAttributes.MediaSize.ISO_A4);
             printAttributeBuilder.setMinMargins(PrintAttributes.Margins.NO_MARGINS);
 
-            PDFUtil.printPdf(PdfViewerActivity.this, fileToPrint, printAttributeBuilder.build());
+            PDFUtil.printPdf(PdfViewerExampleActivity.this, fileToPrint, printAttributeBuilder.build());
         } else if (item.getItemId() == R.id.menuSharePdf) {
             File fileToShare = getPdfFile();
             if (fileToShare == null || !fileToShare.exists()) {

@@ -34,7 +34,7 @@ import com.tejpratapsingh.pdfcreator.views.basic.PDFTextView;
 import java.io.File;
 import java.util.Locale;
 
-public class PdfCreatorActivity extends PDFCreatorActivity {
+public class PdfCreatorExampleActivity extends PDFCreatorActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,12 +47,12 @@ public class PdfCreatorActivity extends PDFCreatorActivity {
         createPDF("test", new PDFUtil.PDFUtilListener() {
             @Override
             public void pdfGenerationSuccess(File savedPDFFile) {
-                Toast.makeText(PdfCreatorActivity.this, "PDF Created", Toast.LENGTH_SHORT).show();
+                Toast.makeText(PdfCreatorExampleActivity.this, "PDF Created", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void pdfGenerationFailure(Exception exception) {
-                Toast.makeText(PdfCreatorActivity.this, "PDF NOT Created", Toast.LENGTH_SHORT).show();
+                Toast.makeText(PdfCreatorExampleActivity.this, "PDF NOT Created", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -201,8 +201,8 @@ public class PdfCreatorActivity extends PDFCreatorActivity {
     protected void onNextClicked(final File savedPDFFile) {
         Uri pdfUri = Uri.fromFile(savedPDFFile);
 
-        Intent intentPdfViewer = new Intent(PdfCreatorActivity.this, PdfViewerActivity.class);
-        intentPdfViewer.putExtra(PdfViewerActivity.PDF_FILE_URI, pdfUri);
+        Intent intentPdfViewer = new Intent(PdfCreatorExampleActivity.this, PdfViewerExampleActivity.class);
+        intentPdfViewer.putExtra(PdfViewerExampleActivity.PDF_FILE_URI, pdfUri);
 
         startActivity(intentPdfViewer);
     }
