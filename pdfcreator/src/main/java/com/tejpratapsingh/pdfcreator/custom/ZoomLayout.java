@@ -14,30 +14,20 @@ import android.widget.FrameLayout;
  */
 public class ZoomLayout extends FrameLayout implements ScaleGestureDetector.OnScaleGestureListener {
 
-    private enum Mode {
-        NONE,
-        DRAG,
-        ZOOM
-    }
-
     private static final String TAG = "ZoomLayout";
     private static final float MIN_ZOOM = 1.0f;
     private static final float MAX_ZOOM = 4.0f;
-
     private Mode mode = Mode.NONE;
     private float scale = 1.0f;
     private float lastScaleFactor = 0f;
-
     // Where the finger first  touches the screen
     private float startX = 0f;
     private float startY = 0f;
-
     // How much to translate the canvas
     private float dx = 0f;
     private float dy = 0f;
     private float prevDx = 0f;
     private float prevDy = 0f;
-
     public ZoomLayout(Context context) {
         super(context);
         init(context);
@@ -112,13 +102,13 @@ public class ZoomLayout extends FrameLayout implements ScaleGestureDetector.OnSc
         return false;
     }
 
-    // ScaleGestureDetector
-
     @Override
     public boolean onScaleBegin(ScaleGestureDetector scaleDetector) {
         Log.i(TAG, "onScaleBegin");
         return true;
     }
+
+    // ScaleGestureDetector
 
     @Override
     public boolean onScale(ScaleGestureDetector scaleDetector) {
@@ -161,5 +151,11 @@ public class ZoomLayout extends FrameLayout implements ScaleGestureDetector.OnSc
 
     private View child() {
         return getChildAt(0);
+    }
+
+    private enum Mode {
+        NONE,
+        DRAG,
+        ZOOM
     }
 }

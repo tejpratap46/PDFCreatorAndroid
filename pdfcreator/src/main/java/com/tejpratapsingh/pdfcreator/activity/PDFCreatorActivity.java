@@ -23,8 +23,8 @@ import com.tejpratapsingh.pdfcreator.utils.PDFUtil;
 import com.tejpratapsingh.pdfcreator.views.PDFBody;
 import com.tejpratapsingh.pdfcreator.views.PDFFooterView;
 import com.tejpratapsingh.pdfcreator.views.PDFHeaderView;
-import com.tejpratapsingh.pdfcreator.views.basic.PDFPageBreakView;
 import com.tejpratapsingh.pdfcreator.views.basic.PDFImageView;
+import com.tejpratapsingh.pdfcreator.views.basic.PDFPageBreakView;
 import com.tejpratapsingh.pdfcreator.views.basic.PDFVerticalView;
 import com.tejpratapsingh.pdfcreator.views.basic.PDFView;
 
@@ -35,20 +35,16 @@ import java.util.Locale;
 
 public abstract class PDFCreatorActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = "PDFCreatorActivity";
-
-    private int heightRequiredByHeader = 0;
-    private int heightRequiredByFooter = 0;
-    private int selectedPreviewPage = 0;
-
     LinearLayout layoutPageParent, layoutPrintPreview;
     TextView textViewGeneratingPDFHolder, textViewPageNumber, textViewPreviewNotAvailable;
     AppCompatImageView imageViewPDFPreview;
     Button buttonEmailVisit;
     ImageButton buttonNextPage, buttonPreviousPage;
-
     ArrayList<Bitmap> pagePreviewBitmapList = new ArrayList<>();
-
     File savedPDFFile = null;
+    private int heightRequiredByHeader = 0;
+    private int heightRequiredByFooter = 0;
+    private int selectedPreviewPage = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

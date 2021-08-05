@@ -10,7 +10,7 @@ public class PdfCreatorExampleActivityTest extends ScreenRobot<PdfCreatorExample
 
     @Rule
     public ActivityScenarioRule<PdfCreatorExampleActivity> activityRule =
-            new ActivityScenarioRule<>( PdfCreatorExampleActivity.class );
+            new ActivityScenarioRule<>(PdfCreatorExampleActivity.class);
 
     @Test
     public void canGeneratePdf() {

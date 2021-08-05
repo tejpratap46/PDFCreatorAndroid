@@ -28,33 +28,6 @@ public class PdfEditorExampleActivity extends AppCompatActivity {
 
     private WebView webView;
 
-    public static class MyWebViewClient extends WebViewClient {
-
-        public interface OnSourceReceived {
-            void success(String html);
-        }
-
-        private final OnSourceReceived onSourceReceived;
-
-        public MyWebViewClient(OnSourceReceived onSourceReceived) {
-            this.onSourceReceived = onSourceReceived;
-        }
-
-        public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            if (url.startsWith("source://")) {
-                try {
-                    String html = URLDecoder.decode(url, "UTF-8").substring(9);
-                    onSourceReceived.success(html);
-                } catch (UnsupportedEncodingException e) {
-                    Log.e("example", "failed to decode source", e);
-                }
-                return true;
-            }
-            // For all other links, let the WebView do it's normal thing
-            return false;
-        }
-    }
-
     @SuppressLint("SetJavaScriptEnabled")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,5 +101,32 @@ public class PdfEditorExampleActivity extends AppCompatActivity {
             webView.loadUrl("javascript:this.document.location.href = 'source://' + encodeURI(document.documentElement.outerHTML);");
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public static class MyWebViewClient extends WebViewClient {
+
+        private final OnSourceReceived onSourceReceived;
+
+        public MyWebViewClient(OnSourceReceived onSourceReceived) {
+            this.onSourceReceived = onSourceReceived;
+        }
+
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            if (url.startsWith("source://")) {
+                try {
+                    String html = URLDecoder.decode(url, "UTF-8").substring(9);
+                    onSourceReceived.success(html);
+                } catch (UnsupportedEncodingException e) {
+                    Log.e("example", "failed to decode source", e);
+                }
+                return true;
+            }
+            // For all other links, let the WebView do it's normal thing
+            return false;
+        }
+
+        public interface OnSourceReceived {
+            void success(String html);
+        }
     }
 }

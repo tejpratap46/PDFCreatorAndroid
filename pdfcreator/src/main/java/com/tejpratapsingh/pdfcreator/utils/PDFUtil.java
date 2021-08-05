@@ -66,6 +66,64 @@ public class PDFUtil {
         return sInstance;
     }
 
+    public static void generatePDFFromHTML(final Context context, final File file, final String htmlString, PDFPrint.OnPDFPrintListener onPDFPrintListener) {
+        PDFPrint.generatePDFFromHTML(context, file, htmlString, onPDFPrintListener);
+    }
+
+    public static void generatePDFFromWebView(final File file, final WebView webView, PDFPrint.OnPDFPrintListener onPDFPrintListener) {
+        PDFPrint.generatePDFFromWebView(file, webView, onPDFPrintListener);
+    }
+
+    public static PrintJob printPdf(final Activity activity, File pdfFileToPrint, PrintAttributes printAttributes) {
+        return PDFPrint.printPDF(activity, pdfFileToPrint, printAttributes);
+    }
+
+    /**
+     * Convert PDF to bitmap, only works on devices above LOLLIPOP
+     *
+     * @param pdfFile pdf file
+     * @return list of bitmap of every page
+     * @throws Exception
+     */
+    public static LinkedList<Bitmap> pdfToBitmap(File pdfFile) throws Exception, IllegalStateException {
+        if (pdfFile == null || pdfFile.exists() == false) {
+            throw new IllegalStateException("PDF File Does Not Exist");
+        }
+
+        LinkedList<Bitmap> bitmaps = new LinkedList<>();
+
+        try {
+            PdfRenderer renderer = new PdfRenderer(ParcelFileDescriptor.open(pdfFile, ParcelFileDescriptor.MODE_READ_ONLY));
+
+            Bitmap bitmap;
+            final int pageCount = renderer.getPageCount();
+            for (int i = 0; i < pageCount; i++) {
+                PdfRenderer.Page page = renderer.openPage(i);
+
+                int width = page.getWidth();
+                int height = page.getHeight();
+
+                /* FOR HIGHER QUALITY IMAGES, USE:
+                int width = context.getResources().getDisplayMetrics().densityDpi / 72 * page.getWidth();
+                int height = context.getResources().getDisplayMetrics().densityDpi / 72 * page.getHeight();
+                */
+
+                bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+                page.render(bitmap, null, null, PdfRenderer.Page.RENDER_MODE_FOR_DISPLAY);
+
+                bitmaps.add(bitmap);
+
+                // close the page
+                page.close();
+            }
+            // close the renderer
+            renderer.close();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return bitmaps;
+    }
+
     /**
      * Generates PDF for the given content views to the file path specified.
      * <p/>
@@ -94,16 +152,22 @@ public class PDFUtil {
         }
     }
 
-    public static void generatePDFFromHTML(final Context context, final File file, final String htmlString, PDFPrint.OnPDFPrintListener onPDFPrintListener) {
-        PDFPrint.generatePDFFromHTML(context, file, htmlString, onPDFPrintListener);
-    }
-
-    public static void generatePDFFromWebView(final File file, final WebView webView, PDFPrint.OnPDFPrintListener onPDFPrintListener) {
-        PDFPrint.generatePDFFromWebView(file, webView, onPDFPrintListener);
-    }
-
-    public static PrintJob printPdf(final Activity activity, File pdfFileToPrint, PrintAttributes printAttributes) {
-        return PDFPrint.printPDF(activity, pdfFileToPrint, printAttributes);
+    /**
+     * Get total number of pages
+     *
+     * @param pdfFile pdf file to get page count of
+     * @return pdf page count
+     * @throws IOException
+     * @throws Exception
+     */
+    private int getTotalPages(File pdfFile) throws IOException, Exception {
+        ParcelFileDescriptor parcelFileDescriptor = ParcelFileDescriptor.open(pdfFile, ParcelFileDescriptor.MODE_READ_ONLY);
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            PdfRenderer pdfRenderer = new PdfRenderer(parcelFileDescriptor);
+            return pdfRenderer.getPageCount();
+        } else {
+            throw new Exception("PDF cannot be processed in this device");
+        }
     }
 
     /**
@@ -312,70 +376,6 @@ public class PDFUtil {
             return "APINotSupportedException{" +
                     "mErrorMessage='" + mErrorMessage + '\'' +
                     '}';
-        }
-    }
-
-    /**
-     * Convert PDF to bitmap, only works on devices above LOLLIPOP
-     *
-     * @param pdfFile pdf file
-     * @return list of bitmap of every page
-     * @throws Exception
-     */
-    public static LinkedList<Bitmap> pdfToBitmap(File pdfFile) throws Exception, IllegalStateException {
-        if (pdfFile == null || pdfFile.exists() == false) {
-            throw new IllegalStateException("PDF File Does Not Exist");
-        }
-
-        LinkedList<Bitmap> bitmaps = new LinkedList<>();
-
-        try {
-            PdfRenderer renderer = new PdfRenderer(ParcelFileDescriptor.open(pdfFile, ParcelFileDescriptor.MODE_READ_ONLY));
-
-            Bitmap bitmap;
-            final int pageCount = renderer.getPageCount();
-            for (int i = 0; i < pageCount; i++) {
-                PdfRenderer.Page page = renderer.openPage(i);
-
-                int width = page.getWidth();
-                int height = page.getHeight();
-
-                /* FOR HIGHER QUALITY IMAGES, USE:
-                int width = context.getResources().getDisplayMetrics().densityDpi / 72 * page.getWidth();
-                int height = context.getResources().getDisplayMetrics().densityDpi / 72 * page.getHeight();
-                */
-
-                bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
-                page.render(bitmap, null, null, PdfRenderer.Page.RENDER_MODE_FOR_DISPLAY);
-
-                bitmaps.add(bitmap);
-
-                // close the page
-                page.close();
-            }
-            // close the renderer
-            renderer.close();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return bitmaps;
-    }
-
-    /**
-     * Get total number of pages
-     *
-     * @param pdfFile pdf file to get page count of
-     * @return pdf page count
-     * @throws IOException
-     * @throws Exception
-     */
-    private int getTotalPages(File pdfFile) throws IOException, Exception {
-        ParcelFileDescriptor parcelFileDescriptor = ParcelFileDescriptor.open(pdfFile, ParcelFileDescriptor.MODE_READ_ONLY);
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-            PdfRenderer pdfRenderer = new PdfRenderer(parcelFileDescriptor);
-            return pdfRenderer.getPageCount();
-        } else {
-            throw new Exception("PDF cannot be processed in this device");
         }
     }
 }

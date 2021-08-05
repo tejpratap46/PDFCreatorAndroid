@@ -11,16 +11,11 @@ import java.util.ArrayList;
 
 public class PDFView implements Serializable {
     private static final String TAG = "PDFView";
-
-    public int paddingTop = 0, paddingRight = 0, paddingBottom = 0, paddingLeft = 0;
-
     private final ArrayList<PDFView> childViewList = new ArrayList<>();
-
-    private boolean hasParent = false;
-
-    private View currentView = null;
-
     private final Context context;
+    public int paddingTop = 0, paddingRight = 0, paddingBottom = 0, paddingLeft = 0;
+    private boolean hasParent = false;
+    private View currentView = null;
 
     protected PDFView(@NonNull Context context) {
         this.context = context;
@@ -28,11 +23,6 @@ public class PDFView implements Serializable {
 
     public Context getContext() {
         return context;
-    }
-
-    public PDFView setView(@NonNull View view) {
-        this.currentView = view;
-        return this;
     }
 
     public PDFView setPadding(int left, int top, int right, int bottom) {
@@ -82,6 +72,11 @@ public class PDFView implements Serializable {
 
     public View getView() {
         return this.currentView;
+    }
+
+    public PDFView setView(@NonNull View view) {
+        this.currentView = view;
+        return this;
     }
 
     /**

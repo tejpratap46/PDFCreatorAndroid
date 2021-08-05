@@ -26,13 +26,10 @@ import java.util.LinkedList;
 import java.util.Locale;
 
 public class PDFViewerActivity extends AppCompatActivity {
-    private static final String TAG = "PDFViewerActivity";
-
     public static final String PDF_FILE_URI = "pdfFileUri";
-
-    private File pdfFile = null;
-
+    private static final String TAG = "PDFViewerActivity";
     private static LinkedList<Bitmap> pdfBitmapList = new LinkedList<>();
+    private File pdfFile = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

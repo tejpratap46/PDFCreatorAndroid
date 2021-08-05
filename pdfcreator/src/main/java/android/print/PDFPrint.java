@@ -17,12 +17,6 @@ import java.io.OutputStream;
 
 public class PDFPrint {
 
-    public interface OnPDFPrintListener {
-        void onSuccess(File file);
-
-        void onError(Exception exception);
-    }
-
     public static void generatePDFFromHTML(final Context context, final File file, final String htmlString, final OnPDFPrintListener onPDFPrintListener) {
         final WebView mWebView = new WebView(context);
         mWebView.setWebViewClient(new WebViewClient() {
@@ -158,5 +152,11 @@ public class PDFPrint {
                 callback.onLayoutFinished(pdi, true);
             }
         }, printAttributes);
+    }
+
+    public interface OnPDFPrintListener {
+        void onSuccess(File file);
+
+        void onError(Exception exception);
     }
 }

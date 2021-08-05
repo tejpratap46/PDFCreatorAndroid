@@ -25,10 +25,10 @@ import com.tejpratapsingh.pdfcreator.views.PDFBody;
 import com.tejpratapsingh.pdfcreator.views.PDFFooterView;
 import com.tejpratapsingh.pdfcreator.views.PDFHeaderView;
 import com.tejpratapsingh.pdfcreator.views.PDFTableView;
-import com.tejpratapsingh.pdfcreator.views.basic.PDFPageBreakView;
 import com.tejpratapsingh.pdfcreator.views.basic.PDFHorizontalView;
 import com.tejpratapsingh.pdfcreator.views.basic.PDFImageView;
 import com.tejpratapsingh.pdfcreator.views.basic.PDFLineSeparatorView;
+import com.tejpratapsingh.pdfcreator.views.basic.PDFPageBreakView;
 import com.tejpratapsingh.pdfcreator.views.basic.PDFTextView;
 
 import java.io.File;

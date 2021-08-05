@@ -7,7 +7,7 @@
         <item name="android:statusBarColor">@color/colorPrimaryDark</item>
     </style>
 
-    <style name="AppTheme.TransparentStatusBar" parent="AppTheme" >
+    <style name="AppTheme.TransparentStatusBar" parent="AppTheme">
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowIsTranslucent">true</item>

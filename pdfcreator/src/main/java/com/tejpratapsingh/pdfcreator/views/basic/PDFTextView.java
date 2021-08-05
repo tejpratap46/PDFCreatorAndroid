@@ -21,29 +21,6 @@ public class PDFTextView extends PDFView implements Serializable {
     private static final float TEXT_SIZE_H3 = 16;
     private static final float TEXT_SIZE_P = 12;
     private static final float TEXT_SIZE_SMALL = 10;
-
-    public enum PDF_TEXT_SIZE {
-        HEADER(TEXT_SIZE_HEADER),
-        H1(TEXT_SIZE_H1),
-        H2(TEXT_SIZE_H2),
-        H3(TEXT_SIZE_H3),
-        P(TEXT_SIZE_P),
-        SMALL(TEXT_SIZE_SMALL);
-
-        // declaring private variable for getting values
-        private final float fontSize;
-
-        // getter method
-        public float getFontSize() {
-            return this.fontSize;
-        }
-
-        // enum constructor - cannot be public or protected
-        PDF_TEXT_SIZE(float action) {
-            this.fontSize = action;
-        }
-    }
-
     private SpannableString text = new SpannableString("");
 
     public PDFTextView(Context context, PDF_TEXT_SIZE size) {
@@ -66,6 +43,10 @@ public class PDFTextView extends PDFView implements Serializable {
         throw new IllegalStateException("Cannot add subview to TextView");
     }
 
+    public SpannableString getText() {
+        return text;
+    }
+
     public PDFTextView setText(SpannableString text) {
         this.text = text;
         getView().setText(text);
@@ -76,10 +57,6 @@ public class PDFTextView extends PDFView implements Serializable {
         this.text = new SpannableString(text);
         getView().setText(text);
         return this;
-    }
-
-    public SpannableString getText() {
-        return text;
     }
 
     @Override
@@ -101,5 +78,27 @@ public class PDFTextView extends PDFView implements Serializable {
     @Override
     public TextView getView() {
         return (TextView) super.getView();
+    }
+
+    public enum PDF_TEXT_SIZE {
+        HEADER(TEXT_SIZE_HEADER),
+        H1(TEXT_SIZE_H1),
+        H2(TEXT_SIZE_H2),
+        H3(TEXT_SIZE_H3),
+        P(TEXT_SIZE_P),
+        SMALL(TEXT_SIZE_SMALL);
+
+        // declaring private variable for getting values
+        private final float fontSize;
+
+        // enum constructor - cannot be public or protected
+        PDF_TEXT_SIZE(float action) {
+            this.fontSize = action;
+        }
+
+        // getter method
+        public float getFontSize() {
+            return this.fontSize;
+        }
     }
 }

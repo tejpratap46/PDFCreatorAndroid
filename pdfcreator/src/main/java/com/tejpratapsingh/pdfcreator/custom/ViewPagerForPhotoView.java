@@ -1,11 +1,10 @@
 package com.tejpratapsingh.pdfcreator.custom;
 
 import android.content.Context;
-
-import androidx.viewpager.widget.ViewPager;
-
 import android.util.AttributeSet;
 import android.view.MotionEvent;
+
+import androidx.viewpager.widget.ViewPager;
 
 public class ViewPagerForPhotoView extends ViewPager {
 
@@ -40,11 +39,11 @@ public class ViewPagerForPhotoView extends ViewPager {
         isLocked = !isLocked;
     }
 
-    public void setLocked(boolean isLocked) {
-        this.isLocked = isLocked;
-    }
-
     public boolean isLocked() {
         return isLocked;
+    }
+
+    public void setLocked(boolean isLocked) {
+        this.isLocked = isLocked;
     }
 }

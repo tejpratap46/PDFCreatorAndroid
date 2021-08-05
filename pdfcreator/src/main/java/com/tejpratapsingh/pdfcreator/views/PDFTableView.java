@@ -2,7 +2,6 @@ package com.tejpratapsingh.pdfcreator.views;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
@@ -15,15 +14,11 @@ import com.tejpratapsingh.pdfcreator.views.basic.PDFVerticalView;
 import com.tejpratapsingh.pdfcreator.views.basic.PDFView;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 public class PDFTableView extends PDFView implements Serializable {
     private static final String TAG = "PDFTableView";
-
-    private int[] rowWidthPercent = {};
-
     private final PDFTableRowView headerRow, firstRow;
+    private int[] rowWidthPercent = {};
 
     public PDFTableView(@NonNull Context context, @NonNull PDFTableRowView headerRow, @NonNull PDFTableRowView firstRow) {
         super(context);

@@ -5,7 +5,6 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.Environment;
 import android.provider.OpenableColumns;
 import android.util.Log;
 import android.webkit.MimeTypeMap;
@@ -30,31 +29,11 @@ import java.util.Locale;
  */
 public class FileManager {
 
-    public enum FILE_TYPE implements Serializable {
-        IMAGE, AUDIO, VIDEO, PDF, TEXT, DOC, PPT, XLS, UNKNOWN
-    }
-
-    public enum IMAGE_QUALITY implements Serializable {
-        HIGH(1024), MID(512), LOW(256);
-
-        private int size;
-
-        IMAGE_QUALITY(int size) {
-            this.size = size;
-        }
-
-        public int getSize() {
-            return size;
-        }
-    }
-
+    private static FileManager instance;
     private final String tempDirectoryName = "temp";
     private final String tempDuplicateFileNameSuffix = "dup";
     private final String DOCUMENT_THUMBNAIL_SUFFIX = "-thumb.jpeg";
     private final int IMAGE_DOCUMENT_MAX_THUMBNAIL_SIZE = 50; // 50KB
-
-    private static FileManager instance;
-
     private FileManager() {
     }
 
@@ -532,6 +511,24 @@ public class FileManager {
             return String.format(Locale.getDefault(), "%s MB", numberFormat.format((float) fileSizeInKb / 1024));
         } else {
             return String.format(Locale.getDefault(), "%s GB", numberFormat.format((float) fileSizeInKb / (1024 * 1024)));
+        }
+    }
+
+    public enum FILE_TYPE implements Serializable {
+        IMAGE, AUDIO, VIDEO, PDF, TEXT, DOC, PPT, XLS, UNKNOWN
+    }
+
+    public enum IMAGE_QUALITY implements Serializable {
+        HIGH(1024), MID(512), LOW(256);
+
+        private int size;
+
+        IMAGE_QUALITY(int size) {
+            this.size = size;
+        }
+
+        public int getSize() {
+            return size;
         }
     }
 }
