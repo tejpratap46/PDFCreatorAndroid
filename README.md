@@ -35,7 +35,7 @@ Step 2. Add the dependency
 * This library creates pages by adding views to a parent view unitil the next view is about to exceed current page. If next view exceeds current page, that view will be added to new page.
 
 ## Implementation
-* First thing first, Look at [PdfCreatorActivity](https://github.com/tejpratap46/PDFCreatorAndroid/blob/master/app/src/main/java/com/tejpratapsingh/pdfcreatorandroid/PdfCreatorExampleActivity.java) of app.
+* First thing first, Look at [PdfCreatorExampleActivity](https://github.com/tejpratap46/PDFCreatorAndroid/blob/master/app/src/main/java/com/tejpratapsingh/pdfcreatorandroid/PdfCreatorExampleActivity.java) of app.
 
 1. PDF creater uses views which can be rendered, So we need to exted an activity in order to create activity.
 2. Create a Empty `Activity` without any layout and extend it with `PDFCreatorActivity`. Do not set use `setContentView(int resourceId)` inside your created activity.
